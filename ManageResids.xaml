@@ -16,6 +16,15 @@
             </Image.Effect>
         </Image>
 
+        <Button HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Margin="20"
+                Style="{StaticResource MaterialDesignIconButton}" 
+                Foreground="White"
+                ToolTip="Voltar"
+                Click="BtnVoltar_Click">
+            <materialDesign:PackIcon Kind="ArrowLeft" Width="30" Height="30"/>
+        </Button>
 
         <TextBlock Text="Gerenciar usuarios"
            HorizontalAlignment="Center"
