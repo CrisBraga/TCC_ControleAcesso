@@ -7,8 +7,8 @@ namespace wpf_exemplo.Helpers
 {
     public static class DatabaseHelper
     {
-        // ⚠️ Ajuste conforme seu ambiente
-        private const string connectionString = "Server=localhost;Database=SISTEMA;Uid=root;Pwd=;";
+        // Ajuste conforme seu ambiente
+        private const string connectionString = "Server=localhost;Database=SISTEMA;Uid=root;Pwd='';";
 
         public static bool RegisterUser(string username, string password)
         {
