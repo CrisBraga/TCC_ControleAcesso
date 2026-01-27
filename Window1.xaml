@@ -16,103 +16,127 @@
         Background="Black">
 
     <materialDesign:DrawerHost x:Name="MainDrawerHost" IsLeftDrawerOpen="False">
+        
+       
 
         <materialDesign:DrawerHost.LeftDrawerContent>
-            <StackPanel Width="280" Background="#FF1E3A5F">
-                <Button x:Name ="MenuBtn" 
+            <Grid Width="280" Background="#FF1E3A5F">
+
+                <StackPanel VerticalAlignment="Top">
+                    <Button x:Name ="MenuBtn" 
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Foreground="White" 
                     HorizontalAlignment="Left" 
-                    Margin="28,10,0,10"
+                    Margin="28,30,0,10"
                     Click="MenuBtn_click">
 
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="ViewDashboard" 
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ViewDashboard" 
                                          Margin="0,0,10,0" 
                                          VerticalAlignment="Center"/>
 
-                        <TextBlock Text="Entrada / Saída" 
+                            <TextBlock Text="Entrada / Saída" 
                            FontSize="20"/>
-                    </StackPanel>
-                </Button>
+                        </StackPanel>
+                    </Button>
 
-                <Button x:Name="AddBtn"
+                    <Button x:Name="AddBtn"
                         Style="{StaticResource MaterialDesignFlatButton}"
                         Foreground="White"
                         HorizontalAlignment="Left"
-                        Margin="10,10,0,0">
+                        Margin="10,15,0,0">
 
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="PersonPlus"
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="PersonPlus"
                                                  Margin="0,0,10,0"
                                                  VerticalAlignment="Center"/>
-                        <TextBlock Text="Adicionar moradores" FontSize="20"/>
-                    </StackPanel>
-                </Button>
+                            <TextBlock Text="Adicionar moradores" FontSize="20"/>
+                        </StackPanel>
+                    </Button>
 
-                <Button x:Name="GerenciarBtn"
+                    <Button x:Name="GerenciarBtn"
                         Style="{StaticResource MaterialDesignFlatButton}"
                         Foreground="White"
                         HorizontalAlignment="Left"
-                        Margin="10,5,0,0"
+                        Margin="10,10,0,0"
                         >
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="WrenchSettings"
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="WrenchSettings"
                                                  Margin="0,0,10,0"
                                                  VerticalAlignment="Center"/>
-                        <TextBlock Text="Gerenciar moradores" FontSize="20"/>
-                    </StackPanel>
-                    
-                </Button>
+                            <TextBlock Text="Gerenciar moradores" FontSize="20"/>
+                        </StackPanel>
 
-                <Button x:Name="ExcluirBtn"
+                    </Button>
+
+                    <Button x:Name="ExcluirBtn"
                         Style="{StaticResource MaterialDesignFlatButton}"
                         Foreground="White"
                         HorizontalAlignment="Left"
-                        Margin="10,5,0,0"
+                        Margin="10,10,0,0"
                         >
 
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="BinCircle"
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="BinCircle"
                                  Margin="0,0,10,0"
                                  VerticalAlignment="Center"/>
-                        <TextBlock Text="Excluir morador" FontSize="20"/>
-                    </StackPanel>
-                </Button>
-                
-                <Button x:Name="menuRelatorioBtn" 
+                            <TextBlock Text="Excluir morador" FontSize="20"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="menuRelatorioBtn" 
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Foreground="White" 
                     HorizontalAlignment="Left" 
-                    Margin="10,5,0,0">
+                    Margin="10,10,0,0">
 
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="FileChart" 
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="FileChart" 
                                              Margin="0,0,10,0" 
                                              VerticalAlignment="Center"/>
 
-                        <TextBlock Text="Gerar relatório" FontSize="20"/>
-                    </StackPanel>
-                </Button>
+                            <TextBlock Text="Gerar relatório" FontSize="20"/>
+                        </StackPanel>
+                    </Button>
 
-                <Button x:Name="MenuMoradorBtn" 
+                    <Button x:Name="MenuMoradorBtn" 
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Foreground="White" 
                     HorizontalAlignment="Left" 
-                    Margin="10,5,0,0">
+                    Margin="10,10,0,0" Cursor="Hand">
 
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="AccountGroup" 
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="AccountGroup" 
                                              Margin="0,0,10,0" 
                                              VerticalAlignment="Center"/>
 
-                        <TextBlock Text="Histórico de relatórios" 
+                            <TextBlock Text="Histórico de relatórios" 
                                FontSize="20"/>
 
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+                        </StackPanel>
+                    </Button>
 
+                </StackPanel>
+
+                <Button x:Name="SairBtn"
+                        Grid.Row="1"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Foreground="White"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Margin="10,0,0,10"
+                        Click="SairBtn_Click">
+
+                        <StackPanel Orientation="Horizontal" >
+                            <materialDesign:PackIcon Kind="ExitRun"
+                                                         Margin="0,0,10,0"
+                                                         VerticalAlignment="Center"/>
+                            <TextBlock Text="Encerrar sessão"
+                                   FontSize="20"/>
+                        </StackPanel>
+                    </Button>
+                
+            </Grid>
         </materialDesign:DrawerHost.LeftDrawerContent>
 
         <Grid>

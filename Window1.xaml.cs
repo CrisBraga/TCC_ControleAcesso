@@ -27,5 +27,20 @@ namespace wpf_exemplo
 
             MainDrawerHost.IsLeftDrawerOpen = false;
         }
+
+        private void SairBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var resultado = MessageBox.Show("Desera realmente encerrar a sessão?","Confirmação", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (resultado == MessageBoxResult.Yes)
+            {
+
+                MainWindow mainWindow = new MainWindow();
+
+                mainWindow.Show();
+
+                this.Close();
+
+            }
+        }
     }
 }

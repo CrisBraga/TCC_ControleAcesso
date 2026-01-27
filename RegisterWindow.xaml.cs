@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using wpf_exemplo.Helpers; // Importante: Verifica se o namespace do seu DatabaseHelper é esse mesmo
+using wpf_exemplo.Helpers;
 
 namespace wpf_exemplo
 {
