@@ -1,0 +1,89 @@
+﻿<Window x:Class="wpf_exemplo.ListaMoradores"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Lista de Moradores"
+        Height="720"
+        Width="1280"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        Background="Black">
+
+    <Grid>
+
+        <!-- Background com imagem + blur -->
+        <Image Source="/src/imagem_tcc.png"
+               Stretch="UniformToFill"
+               Opacity="0.8">
+            <Image.Effect>
+                <BlurEffect Radius="15"/>
+            </Image.Effect>
+        </Image>
+
+        <!-- Botão voltar -->
+        <Button HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="20"
+                Style="{StaticResource MaterialDesignIconButton}"
+                Foreground="White"
+                ToolTip="Voltar"
+                Click="BtnVoltar_Click">
+            <materialDesign:PackIcon Kind="ArrowLeft"
+                                     Width="30"
+                                     Height="30"/>
+        </Button>
+
+        <!-- Título -->
+        <TextBlock Text="Moradores Cadastrados"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,20,0,0"
+                   FontSize="26"
+                   FontWeight="Bold"
+                   Foreground="White"/>
+
+        <!-- Container principal -->
+        <Border Background="#AA000000"
+                CornerRadius="30"
+                Width="1000"
+                Height="550"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Effect="{StaticResource MaterialDesignShadowDepth4}">
+
+            <ListView x:Name="LvMoradores"
+                      Margin="30"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      MouseDoubleClick="LvMoradores_MouseDoubleClick">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#1FFFFFFF"
+                                CornerRadius="12"
+                                Padding="15"
+                                Margin="0,0,0,10">
+
+                            <StackPanel>
+                                <TextBlock Text="{Binding NomeCompleto}"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           Foreground="White"/>
+
+                                <TextBlock Text="{Binding Bloco, StringFormat=Bloco: {0}}"
+                                           Foreground="LightGray"/>
+
+                                <TextBlock Text="{Binding Apartamento, StringFormat=Apto: {0}}"
+                                           Foreground="LightGray"/>
+                            </StackPanel>
+
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </Border>
+
+    </Grid>
+</Window>

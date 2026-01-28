@@ -16,5 +16,33 @@ CREATE TABLE IF NOT EXISTS moradores (
     bloco VARCHAR(10),
     apartamento VARCHAR(10),
     telefone VARCHAR(20),
+    
+	-- Biometria (IDs do sensor)
+    fingerprint_id_1 INT UNIQUE,
+    fingerprint_id_2 INT UNIQUE,
+    
+	ativo BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT INTO moradores
+(
+    nome_completo,
+    bloco,
+    apartamento,
+    telefone,
+    fingerprint_id_1,
+    fingerprint_id_2,
+    ativo
+)
+VALUES
+(
+    'João da Silva',
+    'A',
+    '101',
+    '(11) 99999-9999',
+    1,
+    NULL,
+    TRUE
+);
+	
