@@ -15,150 +15,235 @@
         WindowState="Maximized" 
         Background="Black">
 
-    <materialDesign:DrawerHost x:Name="MainDrawerHost" IsLeftDrawerOpen="False">
+    <materialDesign:DrawerHost x:Name="MainDrawerHost" 
+                               IsLeftDrawerOpen="False">
         
-       
-
         <materialDesign:DrawerHost.LeftDrawerContent>
-            <Grid Width="280" Background="#FF1E3A5F">
-
+            
+            <Grid Width="280" 
+                  Background="#FF1E3A5F">
+                
                 <StackPanel VerticalAlignment="Top">
+                    
                     <Button x:Name ="MenuBtn" 
-                    Style="{StaticResource MaterialDesignFlatButton}"
-                    Foreground="White" 
-                    HorizontalAlignment="Left" 
-                    Margin="28,30,0,10"
-                    Click="MenuBtn_click">
-
+                            Style="{StaticResource MaterialDesignFlatButton}" 
+                            Foreground="White" 
+                            HorizontalAlignment="Left" 
+                            Margin="28,30,0,10" 
+                            Click="MenuBtn_click">
+                        
                         <StackPanel Orientation="Horizontal">
+                            
                             <materialDesign:PackIcon Kind="ViewDashboard" 
-                                         Margin="0,0,10,0" 
-                                         VerticalAlignment="Center"/>
-
+                                                     Margin="0,0,10,0" 
+                                                     VerticalAlignment="Center"/>
+                            
                             <TextBlock Text="Entrada / Saída" 
-                           FontSize="20"/>
+                                       FontSize="20"/>
+                            
                         </StackPanel>
+                        
                     </Button>
 
-                    <Button x:Name="AddBtn"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        Foreground="White"
-                        HorizontalAlignment="Left"
-                        Margin="10,15,0,0">
-
+                    <Button x:Name="AddBtn" 
+                            Style="{StaticResource MaterialDesignFlatButton}" 
+                            Foreground="White" 
+                            HorizontalAlignment="Left" 
+                            Margin="10,15,0,0">
+                        
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="PersonPlus"
-                                                 Margin="0,0,10,0"
-                                                 VerticalAlignment="Center"/>
-                            <TextBlock Text="Adicionar moradores" FontSize="20"/>
+                            
+                            <materialDesign:PackIcon Kind="PersonPlus" 
+                                                     Margin="0,0,10,0" 
+                                                     VerticalAlignment="Center"/>
+                            
+                            <TextBlock Text="Adicionar moradores" 
+                                       FontSize="20"/>
+                            
                         </StackPanel>
+                        
                     </Button>
 
-                    <Button x:Name="GerenciarBtn"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        Foreground="White"
-                        HorizontalAlignment="Left"
-                        Margin="10,10,0,0"
-                        >
+                    <Button x:Name="GerenciarBtn" 
+                            Style="{StaticResource MaterialDesignFlatButton}" 
+                            Foreground="White" 
+                            HorizontalAlignment="Left" 
+                            Margin="10,10,0,0">
+                        
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="WrenchSettings"
-                                                 Margin="0,0,10,0"
-                                                 VerticalAlignment="Center"/>
-                            <TextBlock Text="Gerenciar moradores" FontSize="20"/>
+                            <materialDesign:PackIcon Kind="WrenchSettings" 
+                                                     Margin="0,0,10,0" 
+                                                     VerticalAlignment="Center"/>
+                            
+                            <TextBlock Text="Gerenciar moradores" 
+                                       FontSize="20"/>
+                            
                         </StackPanel>
-
+                        
                     </Button>
 
-                    <Button x:Name="ExcluirBtn"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        Foreground="White"
-                        HorizontalAlignment="Left"
-                        Margin="10,10,0,0"
-                        >
-
+                    <Button x:Name="ExcluirBtn" 
+                            Style="{StaticResource MaterialDesignFlatButton}" 
+                            Foreground="White" 
+                            HorizontalAlignment="Left" 
+                            Margin="10,10,0,0">
+                        
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="BinCircle"
-                                 Margin="0,0,10,0"
-                                 VerticalAlignment="Center"/>
-                            <TextBlock Text="Excluir morador" FontSize="20"/>
+                            
+                            <materialDesign:PackIcon Kind="BinCircle" 
+                                                     Margin="0,0,10,0" 
+                                                     VerticalAlignment="Center"/>
+                            
+                            <TextBlock Text="Excluir morador" 
+                                       FontSize="20"/>
+                            
                         </StackPanel>
+                        
                     </Button>
 
                     <Button x:Name="menuRelatorioBtn" 
-                    Style="{StaticResource MaterialDesignFlatButton}"
-                    Foreground="White" 
-                    HorizontalAlignment="Left" 
-                    Margin="10,10,0,0">
-
+                            Style="{StaticResource MaterialDesignFlatButton}" 
+                            Foreground="White" 
+                            HorizontalAlignment="Left" 
+                            Margin="10,10,0,0"
+                            Click="MenuRelatorioBtn_Click">
+                        
                         <StackPanel Orientation="Horizontal">
+                            
                             <materialDesign:PackIcon Kind="FileChart" 
-                                             Margin="0,0,10,0" 
-                                             VerticalAlignment="Center"/>
-
+                                                     Margin="0,0,10,0" 
+                                                     VerticalAlignment="Center"/>
+                            
                             <TextBlock Text="Gerar relatório" FontSize="20"/>
+                            
                         </StackPanel>
+                        
                     </Button>
 
-                    <Button x:Name="MenuMoradorBtn" 
-                    Style="{StaticResource MaterialDesignFlatButton}"
-                    Foreground="White" 
-                    HorizontalAlignment="Left" 
-                    Margin="10,10,0,0" Cursor="Hand">
-
+                    <Button x:Name="MenuMoradorBtn"
+                            Style="{StaticResource MaterialDesignFlatButton}" 
+                            Foreground="White" 
+                            HorizontalAlignment="Left" 
+                            Margin="10,10,0,0" 
+                            Cursor="Hand"
+                            Click="MenuMoradorBtn_Click">
+                        
                         <StackPanel Orientation="Horizontal">
+                            
                             <materialDesign:PackIcon Kind="AccountGroup" 
-                                             Margin="0,0,10,0" 
-                                             VerticalAlignment="Center"/>
-
+                                                     Margin="0,0,10,0" 
+                                                     VerticalAlignment="Center"/>
+                            
                             <TextBlock Text="Histórico de relatórios" 
-                               FontSize="20"/>
-
+                                       FontSize="20"/>
+                            
                         </StackPanel>
+                        
                     </Button>
-
+                    
                 </StackPanel>
 
-                <Button x:Name="SairBtn"
-                        Grid.Row="1"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        Foreground="White"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        Margin="10,0,0,10"
+                <Button x:Name="SairBtn" 
+                        Style="{StaticResource MaterialDesignFlatButton}" 
+                        Foreground="White" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Bottom" 
+                        Margin="10,0,0,10" 
                         Click="SairBtn_Click">
-
-                        <StackPanel Orientation="Horizontal" >
-                            <materialDesign:PackIcon Kind="ExitRun"
-                                                         Margin="0,0,10,0"
-                                                         VerticalAlignment="Center"/>
-                            <TextBlock Text="Encerrar sessão"
+                    
+                    <StackPanel Orientation="Horizontal" >
+                        
+                        <materialDesign:PackIcon Kind="ExitRun" 
+                                                 Margin="0,0,10,0" 
+                                                 VerticalAlignment="Center"/>
+                        
+                        <TextBlock Text="Encerrar sessão" 
                                    FontSize="20"/>
-                        </StackPanel>
-                    </Button>
+                        
+                    </StackPanel>
+                    
+                </Button>
                 
             </Grid>
+            
         </materialDesign:DrawerHost.LeftDrawerContent>
 
-        <Grid>
-            <Image Source="/src/imagem_tcc.png" 
-                   Stretch="UniformToFill" 
-                   Opacity="0.8">
-                
-                <Image.Effect>
-                    <BlurEffect Radius="15"/>
-                </Image.Effect>
-            </Image>
-            
-            <Frame x:Name="MainFrame"
-                   NavigationUIVisibility="Hidden"
-                   Margin="0,50,0,0" />
-            
-            <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
-                          VerticalAlignment="Top" HorizontalAlignment="Left"
-                          Margin="10,10,0,0"
-                          Foreground="White"
-                          IsChecked="{Binding IsLeftDrawerOpen, ElementName=MainDrawerHost}"/>
+        <materialDesign:DialogHost Identifier="DialogoParaConfirmarSaida" 
+                                   DialogTheme="Inherit" 
+                                   x:Name="DialogoPrincipal">
 
-        </Grid>
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Margin="20" MaxWidth="350">
+
+                    <StackPanel Orientation="Horizontal" 
+                                Margin="0,0,0,10">
+                        
+                        <materialDesign:PackIcon Kind="Logout" 
+                                                 Width="30" 
+                                                 Height="30" 
+                                                 Foreground="White" 
+                                                 VerticalAlignment="Center" 
+                                                 Margin="0,0,10,0"/>
+                        
+                        <TextBlock Text="Encerrar sessão" 
+                                   Foreground="White" 
+                                   FontSize="20" 
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Tem certeza que deseja encerrar a sessão?"
+                   Foreground="#DDFFFFFF"
+                   TextWrapping="Wrap"
+                   FontSize="16"
+                   Margin="0,0,0,30"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Style="{StaticResource MaterialDesignOutlinedButton}"
+                    Foreground="White"
+                    BorderBrush="White"
+                    Content="CANCELAR"
+                    Margin="0,0,10,0"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
+
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                    Background="#FF1E3A5F"
+                    Foreground="White"
+                    Content="SIM, SAIR"
+                    Click="SairConfirmaBtn_Click"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+
+            <Grid>
+                
+                <Image Source="/src/imagem_tcc.png" 
+                       Stretch="UniformToFill" 
+                       Opacity="0.8">
+                    
+                    <Image.Effect>
+                        
+                        <BlurEffect Radius="15"/>
+                        
+                    </Image.Effect>
+                    
+                </Image>
+                
+                <Frame x:Name="MainFrame" 
+                       NavigationUIVisibility="Hidden" 
+                       Margin="0,50,0,0" />
+                
+                <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                              VerticalAlignment="Top" 
+                              HorizontalAlignment="Left" 
+                              Margin="10,10,0,0" 
+                              Foreground="White" 
+                              IsChecked="{Binding IsLeftDrawerOpen, ElementName=MainDrawerHost}"/>
+                
+            </Grid>
+            
+        </materialDesign:DialogHost>
+        
     </materialDesign:DrawerHost>
+    
 </Window>
