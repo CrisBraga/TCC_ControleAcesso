@@ -192,7 +192,7 @@
                     </StackPanel>
 
                     <TextBlock Text="Tem certeza que deseja encerrar a sessão?"
-                   Foreground="#DDFFFFFF"
+                   Foreground="White"
                    TextWrapping="Wrap"
                    FontSize="16"
                    Margin="0,0,0,30"/>

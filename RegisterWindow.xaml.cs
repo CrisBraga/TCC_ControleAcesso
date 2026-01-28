@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using wpf_exemplo.Helpers;
+using MaterialDesignThemes.Wpf;
 
 namespace wpf_exemplo
 {
@@ -8,6 +9,8 @@ namespace wpf_exemplo
         public RegisterWindow()
         {
             InitializeComponent();
+
+            RegisterSnackBar.MessageQueue = new MessageQueue();
         }
 
         private void btn_register(object sender, RoutedEventArgs e)

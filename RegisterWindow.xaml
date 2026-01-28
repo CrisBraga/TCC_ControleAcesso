@@ -9,19 +9,36 @@
 
 
     <Grid>
-        <Image Source="/src/imagem_tcc.png" Stretch="UniformToFill" Opacity="0.8">
+        
+        <Image Source="/src/imagem_tcc.png" 
+               Stretch="UniformToFill" 
+               Opacity="0.8">
+            
             <Image.Effect>
+                
                 <BlurEffect Radius="15"/>
+                
             </Image.Effect>
+            
         </Image>
-        <Border Background="#AA000000" CornerRadius="20" Width="500" Height="600" 
-                HorizontalAlignment="Center" VerticalAlignment="Center"
+        
+        <Border Background="#AA000000" 
+                CornerRadius="20" 
+                Width="500"
+                Height="600" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
                 Effect="{StaticResource MaterialDesignShadowDepth3}">
 
-            <StackPanel Margin="40" VerticalAlignment="Center">
+            <StackPanel Margin="40" 
+                        VerticalAlignment="Center">
 
-                <materialDesign:PackIcon Kind="AccountPlus" Width="60" Height="60" 
-                                         HorizontalAlignment="Center" Foreground="#FF1E3A5F" Margin="0,0,0,10"/>
+                <materialDesign:PackIcon Kind="AccountPlus" 
+                                         Width="60" 
+                                         Height="60" 
+                                         HorizontalAlignment="Center" 
+                                         Foreground="#FF1E3A5F" 
+                                         Margin="0,0,0,10"/>
 
                 <TextBlock Text="Novo Usuario" 
                            FontSize="26" 
@@ -54,16 +71,23 @@
                              Foreground="White"
                              Margin="0,0,0,40"/>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center">
 
-                    <Button Content="SALVAR" Width="150" Height="45"
+                    <Button Content="SALVAR" 
+                            Width="150" 
+                            Height="45"
                             Margin="0,0,20,0"
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             materialDesign:ButtonAssist.CornerRadius="22"
-                            Background="#FF1E3A5F" BorderBrush="#FF1E3A5F"
+                            Background="#FF1E3A5F" 
+                            BorderBrush="#FF1E3A5F"
+                            IsDefault="True"
                             Click="btn_register"/>
 
-                    <Button Content="CANCELAR" Width="150" Height="45"
+                    <Button Content="CANCELAR" 
+                            Width="150" 
+                            Height="45"
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             materialDesign:ButtonAssist.CornerRadius="22"
                             Background="#FF1E3A5F"
@@ -72,6 +96,13 @@
                 </StackPanel>
 
             </StackPanel>
+
         </Border>
+
+        <materialDesign:Snackbar x:Name="RegisterSnackbar"
+                                 MessageQueue="{materialDesign:MessageQueue}"
+                                 Background="#AA000000"
+                                 Foreground="White"/>
     </Grid>
+    
 </Window>
