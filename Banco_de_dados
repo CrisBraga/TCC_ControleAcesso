@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS moradores (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Morador Teste
 INSERT INTO moradores
 (
     nome_completo,

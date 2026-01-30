@@ -30,7 +30,7 @@
                 Click="BtnVoltar_Click">
             <materialDesign:PackIcon Kind="ArrowLeft"
                                      Width="30"
-                                     Height="30"/>
+                                     Height="30" Cursor="Hand"/>
         </Button>
 
         <!-- Título -->

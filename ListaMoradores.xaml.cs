@@ -1,8 +1,7 @@
-﻿using MaterialDesignThemes.Wpf;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using wpf_exemplo.Models;
 
@@ -16,6 +15,11 @@ namespace wpf_exemplo
             CarregarMoradores();
         }
 
+        private void BtnVoltar_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         private void CarregarMoradores()
         {
             var moradores = new List<Morador>();
@@ -25,8 +29,8 @@ namespace wpf_exemplo
             conn.Open();
 
             string sql = @"
-                SELECT id, nome_completo, bloco, apartamento, telefone,
-                       fingerprint_id_1, fingerprint_id_2, ativo
+                SELECT id, nome_completo, bloco, apartamento,
+                       telefone, fingerprint_id_1, fingerprint_id_2, ativo
                 FROM moradores";
 
             using var cmd = new MySqlCommand(sql, conn);
@@ -56,8 +60,6 @@ namespace wpf_exemplo
             {
                 var editar = new ManageResids(morador.Id);
                 editar.ShowDialog();
-
-                // Recarrega a lista após fechar a edição
                 CarregarMoradores();
             }
         }
