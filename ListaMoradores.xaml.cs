@@ -9,14 +9,23 @@ namespace wpf_exemplo
 {
     public partial class ListaMoradores : Window
     {
-        public ListaMoradores()
+
+        private string nomePorteiro;
+        public ListaMoradores(string porteiroLogado)
         {
             InitializeComponent();
             CarregarMoradores();
+            nomePorteiro = porteiroLogado ;
         }
 
         private void BtnVoltar_Click(object sender, RoutedEventArgs e)
         {
+            Window1 window1 = new Window1(nomePorteiro);
+
+            window1.WindowState = WindowState.Maximized;
+
+            window1.Show();
+
             this.Close();
         }
 
@@ -24,7 +33,7 @@ namespace wpf_exemplo
         {
             var moradores = new List<Morador>();
 
-            string connStr = "server=localhost;database=SISTEMA;uid=root;pwd=senha;";
+            string connStr = "server=localhost;database=SISTEMA;uid=root;pwd=;";
             using var conn = new MySqlConnection(connStr);
             conn.Open();
 

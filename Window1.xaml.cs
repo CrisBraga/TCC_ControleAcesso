@@ -4,9 +4,12 @@ namespace wpf_exemplo
 {
     public partial class Window1 : Window
     {
-        public Window1()
+
+        public Window1(string username)
         {
             InitializeComponent();
+
+            txtUsuarioNome.Text = $"Olá, {username}";
 
         }
 
@@ -48,6 +51,21 @@ namespace wpf_exemplo
 
             // 4. Fecha a janela atual
             this.Close();
+        }
+
+        private void GerenciarBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            string nomeAtual = txtUsuarioNome.Text;
+
+            ListaMoradores listaMoradores = new ListaMoradores(nomeAtual);
+
+            listaMoradores.WindowState = WindowState.Maximized;
+
+            listaMoradores.Show();
+
+            this.Close();
+
         }
     }
 }

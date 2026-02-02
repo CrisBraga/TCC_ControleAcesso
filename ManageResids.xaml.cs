@@ -26,7 +26,7 @@ namespace wpf_exemplo
 
         private void CarregarDadosMorador()
         {
-            string connStr = "server=localhost;database=SISTEMA;uid=root;pwd=senha;";
+            string connStr = "server=localhost;database=SISTEMA;uid=root;pwd=;";
             using var conn = new MySqlConnection(connStr);
             conn.Open();
 
@@ -51,7 +51,7 @@ namespace wpf_exemplo
 
         private void BtnSalvar_Click(object sender, RoutedEventArgs e)
         {
-            string connStr = "server=localhost;database=SISTEMA;uid=root;pwd=senha;";
+            string connStr = "server=localhost;database=SISTEMA;uid=root;pwd=;";
             using var conn = new MySqlConnection(connStr);
             conn.Open();
 

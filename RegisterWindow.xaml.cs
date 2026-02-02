@@ -10,7 +10,7 @@ namespace wpf_exemplo
         {
             InitializeComponent();
 
-            RegisterSnackBar.MessageQueue = new MessageQueue();
+            RegisterSnackbar.MessageQueue = new SnackbarMessageQueue();
         }
 
         private void btn_register(object sender, RoutedEventArgs e)

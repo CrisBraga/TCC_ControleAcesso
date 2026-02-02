@@ -23,13 +23,14 @@ namespace wpf_exemplo
                 return;
             }
 
+
             // 2. Validação no Banco de Dados
             if (DatabaseHelper.ValidateLogin(username, password))
             {
                 // LOGIN SUCESSO:
 
                 // Cria a janela principal (o Dashboard que fizemos com menu lateral)
-                Window1 dashboard = new Window1();
+                Window1 dashboard = new Window1(username);
 
                 // Abre o Dashboard
                 dashboard.Show();

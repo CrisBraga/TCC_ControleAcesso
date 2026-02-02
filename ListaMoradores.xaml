@@ -53,7 +53,7 @@
 
             <ListView x:Name="LvMoradores"
                       Margin="30"
-                      Background="Transparent"
+                      Background="White"
                       BorderThickness="0"
                       MouseDoubleClick="LvMoradores_MouseDoubleClick">
 
@@ -71,7 +71,8 @@
                                            Foreground="White"/>
 
                                 <TextBlock Text="{Binding Bloco, StringFormat=Bloco: {0}}"
-                                           Foreground="LightGray"/>
+                                           Foreground="LightGray"
+                                           />
 
                                 <TextBlock Text="{Binding Apartamento, StringFormat=Apto: {0}}"
                                            Foreground="LightGray"/>
