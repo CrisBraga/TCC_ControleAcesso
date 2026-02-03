@@ -3,88 +3,109 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="Lista de Moradores"
-        Height="720"
-        Width="1280"
+        Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         Background="Black">
 
     <Grid>
-
-        <!-- Background com imagem + blur -->
-        <Image Source="/src/imagem_tcc.png"
-               Stretch="UniformToFill"
-               Opacity="0.8">
+        <Image Source="/src/imagem_tcc.png" Stretch="UniformToFill" Opacity="0.6">
             <Image.Effect>
-                <BlurEffect Radius="15"/>
+                <BlurEffect Radius="20"/>
             </Image.Effect>
         </Image>
 
-        <!-- Botão voltar -->
-        <Button HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Margin="20"
+        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20"
                 Style="{StaticResource MaterialDesignIconButton}"
-                Foreground="White"
-                ToolTip="Voltar"
-                Click="BtnVoltar_Click">
-            <materialDesign:PackIcon Kind="ArrowLeft"
-                                     Width="30"
-                                     Height="30" Cursor="Hand"/>
+                Foreground="White" ToolTip="Voltar" Click="BtnVoltar_Click">
+            <materialDesign:PackIcon Kind="ArrowLeft" Width="35" Height="35"/>
         </Button>
 
-        <!-- Título -->
-        <TextBlock Text="Moradores Cadastrados"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,20,0,0"
-                   FontSize="26"
-                   FontWeight="Bold"
-                   Foreground="White"/>
-
-        <!-- Container principal -->
-        <Border Background="#AA000000"
-                CornerRadius="30"
-                Width="1000"
-                Height="550"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
+        <Border Background="#CC1E1E1E" CornerRadius="30"
+                Width="1000" Height="600"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
                 Effect="{StaticResource MaterialDesignShadowDepth4}">
 
-            <ListView x:Name="LvMoradores"
-                      Margin="30"
-                      Background="White"
-                      BorderThickness="0"
-                      MouseDoubleClick="LvMoradores_MouseDoubleClick">
+            <Grid Margin="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Border Background="#1FFFFFFF"
-                                CornerRadius="12"
-                                Padding="15"
-                                Margin="0,0,0,10">
+                <TextBlock Grid.Row="0" Text="Moradores Cadastrados"
+                           FontSize="28" FontWeight="Bold" Foreground="White"
+                           HorizontalAlignment="Left" Margin="10,0,0,20"/>
 
-                            <StackPanel>
-                                <TextBlock Text="{Binding NomeCompleto}"
-                                           FontSize="18"
-                                           FontWeight="Bold"
-                                           Foreground="White"/>
+                <Border Grid.Row="1" Background="#33FFFFFF" CornerRadius="30" Height="50" Margin="0,0,0,20">
+                    <Grid>
+                        <materialDesign:PackIcon Kind="Magnify" Width="25" Height="25" 
+                                                 VerticalAlignment="Center" Margin="15,0,0,0" Foreground="LightGray"/>
 
-                                <TextBlock Text="{Binding Bloco, StringFormat=Bloco: {0}}"
-                                           Foreground="LightGray"
-                                           />
+                        <TextBox x:Name="TxtPesquisa"
+                                 TextChanged="TxtPesquisa_TextChanged"
+                                 materialDesign:HintAssist.Hint="Pesquisar por nome, bloco ou apartamento..."
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                 BorderThickness="0"
+                                 VerticalAlignment="Center"
+                                 FontSize="16"
+                                 Foreground="White"
+                                 CaretBrush="White"
+                                 Margin="50,0,15,0"/>
+                    </Grid>
+                </Border>
 
-                                <TextBlock Text="{Binding Apartamento, StringFormat=Apto: {0}}"
-                                           Foreground="LightGray"/>
-                            </StackPanel>
+                <ListView x:Name="LvMoradores" Grid.Row="2"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          HorizontalContentAlignment="Stretch"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          MouseDoubleClick="LvMoradores_MouseDoubleClick">
 
-                        </Border>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#1FFFFFFF" CornerRadius="30" Padding="15,12" Margin="0,4,0,4">
+                                <Grid Grid.Row="1" Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>     <ColumnDefinition Width="10"/>    <ColumnDefinition Width="100"/>   <ColumnDefinition Width="10"/>    <ColumnDefinition Width="100"/>   </Grid.ColumnDefinitions>
 
-            </ListView>
+                    <Border Grid.Column="0" Background="#33FFFFFF" CornerRadius="10" Height="45">
+                        <TextBox x:Name="TxtNome"
+                                 TextChanged="FiltrarMoradores"
+                                 materialDesign:HintAssist.Hint="Buscar por Nome"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                 BorderThickness="0" VerticalAlignment="Center"
+                                 FontSize="16" Foreground="White" CaretBrush="White"
+                                 Margin="15,0"/>
+                    </Border>
 
+                    <Border Grid.Column="2" Background="#33FFFFFF" CornerRadius="10" Height="45">
+                        <TextBox x:Name="TxtBloco"
+                                 TextChanged="FiltrarMoradores"
+                                 materialDesign:HintAssist.Hint="Bloco"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                 BorderThickness="0" VerticalAlignment="Center"
+                                 FontSize="16" Foreground="White" CaretBrush="White"
+                                 HorizontalContentAlignment="Center"
+                                 Margin="5,0"/>
+                    </Border>
+
+                    <Border Grid.Column="4" Background="#33FFFFFF" CornerRadius="10" Height="45">
+                        <TextBox x:Name="TxtApto"
+                                 TextChanged="FiltrarMoradores"
+                                 materialDesign:HintAssist.Hint="Apto"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                 BorderThickness="0" VerticalAlignment="Center"
+                                 FontSize="16" Foreground="White" CaretBrush="White"
+                                 HorizontalContentAlignment="Center"
+                                 Margin="5,0"/>
+                    </Border>
+                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </Border>
-
     </Grid>
 </Window>

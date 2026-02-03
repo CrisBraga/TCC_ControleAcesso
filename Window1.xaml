@@ -70,36 +70,17 @@
                             HorizontalAlignment="Left" 
                             Margin="10,10,0,0"
                             Click="GerenciarBtn_Click">
-                        
+
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="WrenchSettings" 
                                                      Margin="0,0,10,0" 
                                                      VerticalAlignment="Center"/>
-                            
+
                             <TextBlock Text="Gerenciar moradores" 
                                        FontSize="20"/>
-                            
-                        </StackPanel>
-                        
-                    </Button>
 
-                    <Button x:Name="ExcluirBtn" 
-                            Style="{StaticResource MaterialDesignFlatButton}" 
-                            Foreground="White" 
-                            HorizontalAlignment="Left" 
-                            Margin="10,10,0,0">
-                        
-                        <StackPanel Orientation="Horizontal">
-                            
-                            <materialDesign:PackIcon Kind="BinCircle" 
-                                                     Margin="0,0,10,0" 
-                                                     VerticalAlignment="Center"/>
-                            
-                            <TextBlock Text="Excluir morador" 
-                                       FontSize="20"/>
-                            
                         </StackPanel>
-                        
+
                     </Button>
 
                     <Button x:Name="menuRelatorioBtn" 

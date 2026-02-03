@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using wpf_exemplo.Helpers;
-using MaterialDesignThemes.Wpf;
+using System.Windows.Media;
 
 namespace wpf_exemplo
 {
@@ -9,11 +9,9 @@ namespace wpf_exemplo
         public RegisterWindow()
         {
             InitializeComponent();
-
-            RegisterSnackbar.MessageQueue = new SnackbarMessageQueue();
         }
 
-        private void btn_register(object sender, RoutedEventArgs e)
+        private async void btn_register(object sender, RoutedEventArgs e)
         {
             // 1. Pegando os valores dos campos definidos no XAML
             string username = txtUsuario.Text;
@@ -25,14 +23,16 @@ namespace wpf_exemplo
                 string.IsNullOrWhiteSpace(password) ||
                 string.IsNullOrWhiteSpace(confirmPassword))
             {
-                MessageBox.Show("Por favor, preencha todos os campos!", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                msgErroRegistro.Background = new SolidColorBrush(Color.FromRgb(255, 30, 58));
+                msgErroRegistro.MessageQueue?.Enqueue("Preencha todos os campos!");
                 return;
             }
 
             // 3. Validação: Verifica se as senhas são iguais
             if (password != confirmPassword)
             {
-                MessageBox.Show("As senhas não coincidem!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                msgErroRegistro.Background = new SolidColorBrush(Color.FromRgb(255, 30, 58));
+                msgErroRegistro.MessageQueue?.Enqueue("As senhas não coincidem!");
                 return;
             }
 
@@ -40,7 +40,10 @@ namespace wpf_exemplo
             // O método RegisterUser deve retornar true se deu certo, ou false se falhou (ex: usuário já existe)
             if (DatabaseHelper.RegisterUser(username, password))
             {
-                MessageBox.Show("Usuário cadastrado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                msgRegistro.MessageQueue?.Enqueue("Usuário criado com sucesso!");
+
+                await Task.Delay(2000);
+
                 this.Close(); // Fecha a janela e volta para o login
             }
             else

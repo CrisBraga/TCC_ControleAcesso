@@ -1,5 +1,6 @@
 ﻿using System.Windows;
-using wpf_exemplo.Helpers; // Certifique-se que o namespace do seu DatabaseHelper está correto
+using wpf_exemplo.Helpers;
+using System.Windows.Media;
 
 namespace wpf_exemplo
 {
@@ -11,7 +12,7 @@ namespace wpf_exemplo
         }
 
         // Conectado ao botão "ENTRAR" do XAML
-        private void BtnEntrar_Click(object sender, RoutedEventArgs e)
+        private async void BtnEntrar_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsuario.Text;
             string password = txtSenha.Password;
@@ -19,7 +20,8 @@ namespace wpf_exemplo
             // 1. Validação de campos vazios
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Preencha todos os campos!", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                msgErro.Background = new SolidColorBrush(Color.FromRgb(255, 30, 58));
+                msgErro.MessageQueue?.Enqueue("Preencha todos os campos!");
                 return;
             }
 
@@ -28,6 +30,10 @@ namespace wpf_exemplo
             if (DatabaseHelper.ValidateLogin(username, password))
             {
                 // LOGIN SUCESSO:
+
+                msgLogin.MessageQueue?.Enqueue($"Login bem-sucedido");
+
+                await Task.Delay(2000);
 
                 // Cria a janela principal (o Dashboard que fizemos com menu lateral)
                 Window1 dashboard = new Window1(username);
@@ -40,8 +46,9 @@ namespace wpf_exemplo
             }
             else
             {
+                msgErro.Background = new SolidColorBrush(Color.FromRgb(255, 30, 58));
                 // LOGIN FALHOU:
-                MessageBox.Show("Nome de usuário ou senha incorretos.", "Erro de Acesso", MessageBoxButton.OK, MessageBoxImage.Error);
+                msgErro.MessageQueue?.Enqueue("Usuário ou senha invalidos!");
             }
         }
 
