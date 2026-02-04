@@ -69,37 +69,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>     <ColumnDefinition Width="10"/>    <ColumnDefinition Width="100"/>   <ColumnDefinition Width="10"/>    <ColumnDefinition Width="100"/>   </Grid.ColumnDefinitions>
 
-                    <Border Grid.Column="0" Background="#33FFFFFF" CornerRadius="10" Height="45">
-                        <TextBox x:Name="TxtNome"
-                                 TextChanged="FiltrarMoradores"
-                                 materialDesign:HintAssist.Hint="Buscar por Nome"
-                                 materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                 BorderThickness="0" VerticalAlignment="Center"
-                                 FontSize="16" Foreground="White" CaretBrush="White"
-                                 Margin="15,0"/>
-                    </Border>
-
-                    <Border Grid.Column="2" Background="#33FFFFFF" CornerRadius="10" Height="45">
-                        <TextBox x:Name="TxtBloco"
-                                 TextChanged="FiltrarMoradores"
-                                 materialDesign:HintAssist.Hint="Bloco"
-                                 materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                 BorderThickness="0" VerticalAlignment="Center"
-                                 FontSize="16" Foreground="White" CaretBrush="White"
-                                 HorizontalContentAlignment="Center"
-                                 Margin="5,0"/>
-                    </Border>
-
-                    <Border Grid.Column="4" Background="#33FFFFFF" CornerRadius="10" Height="45">
-                        <TextBox x:Name="TxtApto"
-                                 TextChanged="FiltrarMoradores"
-                                 materialDesign:HintAssist.Hint="Apto"
-                                 materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                 BorderThickness="0" VerticalAlignment="Center"
-                                 FontSize="16" Foreground="White" CaretBrush="White"
-                                 HorizontalContentAlignment="Center"
-                                 Margin="5,0"/>
-                    </Border>
+                                   
                 </Grid>
                             </Border>
                         </DataTemplate>
