@@ -40,5 +40,18 @@ namespace wpf_exemplo
             listaMoradores.Show();
             this.Close();
         }
+
+        private void MenuHistoricoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainDrawerHost.IsLeftDrawerOpen = false;
+
+            históricoRelatorio telaHistorico = new históricoRelatorio(nomeUser);
+
+            telaHistorico.WindowState = WindowState.Maximized;
+
+            telaHistorico.Show();
+            this.Close();
+
+        }
     }
 }

@@ -7,8 +7,9 @@
         xmlns:local="clr-namespace:wpf_exemplo"
         mc:Ignorable="d"
         Title="históricoRelatorio" Height="720" Width="1280"
-        Background="Black">
-
+        Background="Black"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
 
     <Grid>
         <Image Source="/src/imagem_tcc.png"
@@ -19,61 +20,104 @@
             </Image.Effect>
         </Image>
 
+        <Button HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Margin="20"
+        Style="{StaticResource MaterialDesignIconButton}"
+        Foreground="White"
+        ToolTip="Voltar"
+        Click="BtnVoltar_Click" Cursor="Hand">
+            <materialDesign:PackIcon Kind="ArrowLeft"
+                             Width="30"
+                             Height="30"/>
+        </Button>
+
         <Border Background="#AA000000" CornerRadius="30"
-                Width="1000" Height="600"
+                Width="1000" Height="650"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Effect="{StaticResource MaterialDesignShadowDepth4}">
 
-            <StackPanel Margin="40"
-                        VerticalAlignment="Center">
+            <Grid Margin="40">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                <materialDesign:PackIcon Kind="Historic"
-                                         Width="30"
-                                         Height="30"
-                                         HorizontalAlignment="Center"
-                                         />
-                <Grid Margin="30">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,20">
+                    <materialDesign:PackIcon Kind="History" 
+                                             Width="40" Height="40" 
+                                             Foreground="White" 
+                                             VerticalAlignment="Center"/>
 
-                    <TextBlock Grid.Row="0" Text="Histórico de Relatórios"
-                                FontSize="28" FontWeight="Bold" Foreground="White"
-                                HorizontalAlignment="Left" Margin="10,0,0,20"/>
+                    <TextBlock Text="Histórico de Relatórios"
+                               FontSize="32" FontWeight="Bold" Foreground="White"
+                               VerticalAlignment="Center"
+                               Margin="15,0,0,0"/>
+                </StackPanel>
 
-                    <Border Grid.Row="1" Background="#33FFFFFF" CornerRadius="30" Height="50" Margin="0,0,0,20">
-                        <Grid>
-                            <materialDesign:PackIcon Kind="Magnify" Width="25" Height="25" 
-                             VerticalAlignment="Center" Margin="15,0,0,0" Foreground="LightGray"/>
+                <Border Grid.Row="1" Background="#33FFFFFF" CornerRadius="15" Height="50" Margin="0,0,0,30">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                            <TextBox x:Name="TxtPesquisa"
-                                     TextChanged="TxtPesquisa_TextChanged"
-                                     materialDesign:HintAssist.Hint="Pesquisar por Relatório"
-                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                     BorderThickness="0"
-                                     VerticalAlignment="Center"
-                                     FontSize="16"
-                                     Foreground="White"
-                                     CaretBrush="White"
-                                     Margin="50,0,15,0"/>
-                        </Grid>
-                    </Border>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="Magnify" 
+                                                 Width="25" Height="25" 
+                                                 VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                 Foreground="LightGray"/>
 
-                    <ListView x:Name="LvHistRelatorio" Grid.Row="2"
-                      Background="Transparent"
-                      BorderThickness="0"
-                      HorizontalContentAlignment="Stretch"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                      MouseDoubleClick="LvMoradores_MouseDoubleClick">
-                        
-                    </ListView>
-                </Grid>
-                    
+                        <TextBox x:Name="TxtpesqHistorico" Grid.Column="1"
+                                 TextChanged="TxtpesqHistorico_TextChanged"
+                                 materialDesign:HintAssist.Hint="Pesquisar por nome do relatório..."
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                 BorderThickness="0"
+                                 VerticalAlignment="Center"
+                                 FontSize="16"
+                                 Foreground="White"
+                                 CaretBrush="White"
+                                 Margin="0,0,20,0"/>
+                    </Grid>
+                </Border>
 
-            </StackPanel>
+                <ListView x:Name="LvHistoricos" Grid.Row="2"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          HorizontalContentAlignment="Stretch"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          MouseDoubleClick="LvHistoricos_MouseDoubleClick">
+
+                    <ListView.Resources>
+                        <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal}"/>
+                    </ListView.Resources>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#1FFFFFFF" CornerRadius="15" Padding="15" Margin="0,0,0,10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <materialDesign:PackIcon Kind="FilePdfBox" Grid.Column="0" 
+                                                             Width="30" Height="30" Foreground="#FF1E3A5F" VerticalAlignment="Center"/>
+
+                                    <StackPanel Grid.Column="1" Margin="15,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="Relatório Exemplo.pdf" FontSize="16" FontWeight="SemiBold" Foreground="White"/>
+                                        <TextBlock Text="Tipo: Vendas" FontSize="12" Foreground="LightGray"/>
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="2" Text="05/10/2023" VerticalAlignment="Center" Foreground="Gray"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </Grid>
         </Border>
-      <Grid/>
     </Grid>
 </Window>

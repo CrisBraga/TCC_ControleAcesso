@@ -57,6 +57,7 @@
 
                 <ListView x:Name="LvMoradores" Grid.Row="2"
                           Background="Transparent"
+                          Foreground="White"
                           BorderThickness="0"
                           HorizontalContentAlignment="Stretch"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"

@@ -102,13 +102,13 @@
                         
                     </Button>
 
-                    <Button x:Name="MenuMoradorBtn"
+                    <Button x:Name="MenuHistoricoBtn"
                             Style="{StaticResource MaterialDesignFlatButton}" 
                             Foreground="White" 
                             HorizontalAlignment="Left" 
                             Margin="10,10,0,0" 
                             Cursor="Hand"
-                            Click="MenuMoradorBtn_Click">
+                            Click="MenuHistoricoBtn_Click">
                         
                         <StackPanel Orientation="Horizontal">
                             
@@ -117,7 +117,8 @@
                                                      VerticalAlignment="Center"/>
                             
                             <TextBlock Text="Histórico de relatórios" 
-                                       FontSize="20"/>
+                                       FontSize="20"
+                                       />
                             
                         </StackPanel>
                         
