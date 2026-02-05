@@ -21,7 +21,7 @@
             <materialDesign:PackIcon Kind="ArrowLeft" Width="35" Height="35"/>
         </Button>
 
-        <Border Background="#CC1E1E1E" CornerRadius="30"
+        <Border Background="#AA000000" CornerRadius="30"
                 Width="1000" Height="600"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Effect="{StaticResource MaterialDesignShadowDepth4}">
