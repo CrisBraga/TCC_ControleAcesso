@@ -25,6 +25,14 @@ CREATE TABLE IF NOT EXISTS moradores (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Tabela de Acessos
+CREATE TABLE acessos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fingerprint_id INT NOT NULL,
+    data_hora DATETIME NOT NULL,
+    tipo ENUM('ENTRADA', 'SAIDA') NOT NULL
+);
+
 -- Morador Teste
 INSERT INTO moradores
 (

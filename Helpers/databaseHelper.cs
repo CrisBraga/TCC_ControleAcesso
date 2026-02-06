@@ -94,5 +94,9 @@ namespace wpf_exemplo.Helpers
                 return false;
             }
         }
+        public static MySqlConnection GetConnection()
+        {
+            return new MySqlConnection(connectionString);
+        }
     }
 }

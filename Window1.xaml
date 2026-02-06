@@ -22,27 +22,27 @@
 
             <Grid Width="280" 
                   Background="#FF1E3A5F">
-                
+
                 <StackPanel VerticalAlignment="Top">
-                    
+
                     <Button x:Name ="MenuBtn" 
                             Style="{StaticResource MaterialDesignFlatButton}" 
                             Foreground="White" 
                             HorizontalAlignment="Left" 
                             Margin="28,30,0,10" 
                             Click="MenuBtn_click">
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            
+
                             <materialDesign:PackIcon Kind="ViewDashboard" 
                                                      Margin="0,0,10,0" 
                                                      VerticalAlignment="Center"/>
-                            
+
                             <TextBlock Text="Entrada / Saída" 
                                        FontSize="20"/>
-                            
+
                         </StackPanel>
-                        
+
                     </Button>
 
                     <Button x:Name="AddBtn" 
@@ -50,18 +50,18 @@
                             Foreground="White" 
                             HorizontalAlignment="Left" 
                             Margin="10,15,0,0">
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            
+
                             <materialDesign:PackIcon Kind="PersonPlus" 
                                                      Margin="0,0,10,0" 
                                                      VerticalAlignment="Center"/>
-                            
+
                             <TextBlock Text="Adicionar moradores" 
                                        FontSize="20"/>
-                            
+
                         </StackPanel>
-                        
+
                     </Button>
 
                     <Button x:Name="GerenciarBtn" 
@@ -89,17 +89,17 @@
                             HorizontalAlignment="Left" 
                             Margin="10,10,0,0"
                             Click="MenuRelatorioBtn_Click">
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            
+
                             <materialDesign:PackIcon Kind="FileChart" 
                                                      Margin="0,0,10,0" 
                                                      VerticalAlignment="Center"/>
-                            
+
                             <TextBlock Text="Gerar relatório" FontSize="20"/>
-                            
+
                         </StackPanel>
-                        
+
                     </Button>
 
                     <Button x:Name="MenuHistoricoBtn"
@@ -109,21 +109,21 @@
                             Margin="10,10,0,0" 
                             Cursor="Hand"
                             Click="MenuHistoricoBtn_Click">
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            
+
                             <materialDesign:PackIcon Kind="AccountGroup" 
                                                      Margin="0,0,10,0" 
                                                      VerticalAlignment="Center"/>
-                            
+
                             <TextBlock Text="Histórico de relatórios" 
                                        FontSize="20"
                                        />
-                            
+
                         </StackPanel>
-                        
+
                     </Button>
-                    
+
                 </StackPanel>
 
                 <Button x:Name="SairBtn" 
@@ -133,22 +133,22 @@
                         VerticalAlignment="Bottom" 
                         Margin="10,0,0,10" 
                         Click="SairBtn_Click">
-                    
+
                     <StackPanel Orientation="Horizontal" >
-                        
+
                         <materialDesign:PackIcon Kind="ExitRun" 
                                                  Margin="0,0,10,0" 
                                                  VerticalAlignment="Center"/>
-                        
+
                         <TextBlock Text="Encerrar sessão" 
                                    FontSize="20"/>
-                        
+
                     </StackPanel>
-                    
+
                 </Button>
-                
+
             </Grid>
-            
+
         </materialDesign:DrawerHost.LeftDrawerContent>
 
         <materialDesign:DialogHost Identifier="DialogoParaConfirmarSaida" 
@@ -160,14 +160,14 @@
 
                     <StackPanel Orientation="Horizontal" 
                                 Margin="0,0,0,10">
-                        
+
                         <materialDesign:PackIcon Kind="Logout" 
                                                  Width="30" 
                                                  Height="30" 
                                                  Foreground="White" 
                                                  VerticalAlignment="Center" 
                                                  Margin="0,0,10,0"/>
-                        
+
                         <TextBlock Text="Encerrar sessão" 
                                    Foreground="White" 
                                    FontSize="20" 
@@ -199,23 +199,23 @@
             </materialDesign:DialogHost.DialogContent>
 
             <Grid>
-                
+
                 <Image Source="/src/imagem_tcc.png" 
                        Stretch="UniformToFill" 
                        Opacity="0.8">
-                    
+
                     <Image.Effect>
-                        
+
                         <BlurEffect Radius="15"/>
-                        
+
                     </Image.Effect>
-                    
+
                 </Image>
-                
+
                 <Frame x:Name="MainFrame" 
                        NavigationUIVisibility="Hidden" 
                        Margin="0,50,0,0" />
-                
+
                 <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
                               VerticalAlignment="Top" 
                               HorizontalAlignment="Left" 
@@ -245,10 +245,105 @@
                                VerticalAlignment="Center"/>
                 </StackPanel>
 
+                <Grid Margin="80,100,80,40">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- ================= ÚLTIMAS ENTRADAS ================= -->
+                    <Border Grid.Row="0"
+            Background="#AA000000"
+            CornerRadius="25"
+            Padding="25"
+            Margin="308,0,0,20"
+            Effect="{StaticResource MaterialDesignShadowDepth4}">
+
+                        <StackPanel>
+                            <TextBlock Text="Últimas Entradas"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       Margin="0,0,0,15"/>
+
+                            <ListView x:Name="LvEntradas"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      Foreground="White">
+
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Text="{Binding Nome}"
+                                       FontWeight="SemiBold"
+                                       FontSize="15"/>
+
+                                            <TextBlock Text="{Binding DataHora}"
+                                       Grid.Column="1"
+                                       Foreground="LightGray"
+                                       FontSize="14"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+
+                            </ListView>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- ================= ÚLTIMAS SAÍDAS ================= -->
+                    <Border
+            Background="#AA000000"
+            CornerRadius="25"
+            Padding="25"
+            Effect="{StaticResource MaterialDesignShadowDepth4}" Margin="308,282,0,0" Grid.RowSpan="2">
+
+                        <StackPanel>
+                            <TextBlock Text="Últimas Saídas"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       Margin="0,0,0,15"/>
+
+                            <ListView x:Name="LvSaidas"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      Foreground="White">
+
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Text="{Binding Nome}"
+                                       FontWeight="SemiBold"
+                                       FontSize="15"/>
+
+                                            <TextBlock Text="{Binding DataHora}"
+                                       Grid.Column="1"
+                                       Foreground="LightGray"
+                                       FontSize="14"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+
+                            </ListView>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+
             </Grid>
-            
+
         </materialDesign:DialogHost>
-        
+
     </materialDesign:DrawerHost>
-    
+
 </Window>

@@ -17,6 +17,7 @@
     <PackageReference Include="MaterialDesignThemes" Version="5.3.0" />
     <PackageReference Include="MySql.Data" Version="9.5.0" />
     <PackageReference Include="QuestPDF" Version="2025.12.3" />
+    <PackageReference Include="System.IO.Ports" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>
