@@ -11,6 +11,7 @@ namespace wpf_exemplo.Services
         public event Action OnArduinoReady;
         public event Action<int> OnFingerprintDetected;
         public event Action OnNoMatchDetected;
+        public event Action<int> OnEnrollSuccess;
 
 
         public bool IsConnected => _serial != null && _serial.IsOpen;
