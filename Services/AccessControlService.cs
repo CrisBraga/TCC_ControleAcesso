@@ -26,18 +26,27 @@ namespace wpf_exemplo.Services
 
         public void RegisterAccess(int fingerprintId)
         {
+            string ultimoTipo = GetLastAccessType(fingerprintId);
+
+            string novoTipo = ultimoTipo == "ENTRADA"
+                ? "SAIDA"
+                : "ENTRADA";
+
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
             string sql = @"
-                INSERT INTO acessos (fingerprint_id, data_hora)
-                VALUES (@id, NOW())
-            ";
+        INSERT INTO acessos (fingerprint_id, data_hora, tipo)
+        VALUES (@id, NOW(), @tipo)
+    ";
 
             using var cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@id", fingerprintId);
+            cmd.Parameters.AddWithValue("@tipo", novoTipo);
+
             cmd.ExecuteNonQuery();
         }
+
 
         public List<AcessoDashboard> GetUltimasEntradas()
         {
@@ -107,5 +116,25 @@ namespace wpf_exemplo.Services
 
             return lista;
         }
+        public string GetLastAccessType(int fingerprintId)
+        {
+            using var conn = DatabaseHelper.GetConnection();
+            conn.Open();
+
+            string sql = @"
+        SELECT tipo 
+        FROM acessos
+        WHERE fingerprint_id = @id
+        ORDER BY data_hora DESC
+        LIMIT 1
+    ";
+
+            using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@id", fingerprintId);
+
+            var result = cmd.ExecuteScalar();
+            return result?.ToString();
+        }
+
     }
 }

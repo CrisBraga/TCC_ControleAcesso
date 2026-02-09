@@ -81,6 +81,7 @@ namespace wpf_exemplo
                 else
                 {
                     Console.WriteLine($"Acesso NEGADO: {fingerprintId}");
+                    MessageBox.Show($"Acesso NEGADO: {fingerprintId}");
                 }
             });
         }
