@@ -10,6 +10,8 @@ namespace wpf_exemplo.Services
 
         public event Action OnArduinoReady;
         public event Action<int> OnFingerprintDetected;
+        public event Action OnNoMatchDetected;
+
 
         public bool IsConnected => _serial != null && _serial.IsOpen;
 
@@ -73,6 +75,11 @@ namespace wpf_exemplo.Services
                     int id = int.Parse(line.Substring(6));
                     OnFingerprintDetected?.Invoke(id);
                 }
+                else if (line == "NO_MATCH")
+                {
+                    OnNoMatchDetected?.Invoke();
+                }
+
             }
             catch
             {

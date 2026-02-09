@@ -338,6 +338,29 @@
                         </StackPanel>
                     </Border>
                 </Grid>
+                <Border x:Name="AlertNaoAutorizado"
+        Background="#CCB71C1C"
+        CornerRadius="6"
+        Padding="12"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Top"
+        Margin="0,80,0,0"
+        Visibility="Collapsed"
+        Effect="{StaticResource MaterialDesignShadowDepth2}">
+
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="AlertCircle"
+                                 Foreground="White"
+                                 Width="24"
+                                 Height="24"
+                                 Margin="0,0,8,0"/>
+
+                        <TextBlock Text="Digital não cadastrada"
+                   Foreground="White"
+                   FontSize="16"
+                   FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Border>
 
 
             </Grid>

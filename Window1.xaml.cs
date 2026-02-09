@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Windows;
 using wpf_exemplo.Services;
 using wpf_exemplo.Models;
+using System.Threading.Tasks;
+
 
 namespace wpf_exemplo
 {
-    public partial class Window1 : Window
+    public partial class Window1 : Window 
     {
         private string nomeUser;
 
@@ -28,6 +30,8 @@ namespace wpf_exemplo
             // Eventos do Arduino
             _arduino.OnArduinoReady += ArduinoReady;
             _arduino.OnFingerprintDetected += FingerprintDetected;
+            _arduino.OnNoMatchDetected += NoMatchDetected;
+
 
             // Conectar no Arduino
             Loaded += (s, e) =>
@@ -63,6 +67,22 @@ namespace wpf_exemplo
             });
         }
 
+        private async void MostrarAlertaNaoAutorizado()
+        {
+            AlertNaoAutorizado.Visibility = Visibility.Visible;
+
+            await Task.Delay(2500);
+
+            AlertNaoAutorizado.Visibility = Visibility.Collapsed;
+        }
+        private void NoMatchDetected()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                MostrarAlertaNaoAutorizado();
+            });
+        }
+
         private void FingerprintDetected(int fingerprintId)
         {
             Dispatcher.Invoke(() =>
@@ -81,7 +101,7 @@ namespace wpf_exemplo
                 else
                 {
                     Console.WriteLine($"Acesso NEGADO: {fingerprintId}");
-                    MessageBox.Show($"Acesso NEGADO: {fingerprintId}");
+                    MostrarAlertaNaoAutorizado();
                 }
             });
         }
