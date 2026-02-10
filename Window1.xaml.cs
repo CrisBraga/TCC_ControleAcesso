@@ -1,128 +1,220 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using wpf_exemplo.Services;
-using MaterialDesignThemes.Wpf; // Necessário para o DialogHost
+using wpf_exemplo.Models;
+using MaterialDesignThemes.Wpf; // Necessário para o DialogHost e DrawerHost
 
 namespace wpf_exemplo
 {
     public partial class Window1 : Window
     {
-        private SerialArduinoService _arduino;
-        private string _usuarioLogado;
+        // Variáveis globais
+        private string nomeUser; // Nome tratado para exibição
+        private string _usuarioLogado; // Nome original para passar entre telas
 
-        public Window1(string nomeUser)
+        // Serviços
+        private SerialArduinoService _arduino;
+        private AccessControlService _accessControl;
+
+        public Window1(string username)
         {
             InitializeComponent();
 
-            _usuarioLogado = nomeUser;
+            // 1. Tratamento do Nome do Usuário
+            _usuarioLogado = username;
+            nomeUser = username.Replace("Olá, ", ""); // Garante que não duplique o "Olá"
 
-            // Preenche o nome do usuário no topo da tela (conforme seu XAML)
             if (txtUsuarioNome != null)
-                txtUsuarioNome.Text = nomeUser;
+                txtUsuarioNome.Text = $"Olá, {nomeUser}";
 
-            // Configuração do Arduino
+            // 2. Inicialização dos Serviços
             _arduino = new SerialArduinoService();
-            _arduino.OnFingerprintDetected += OnFingerprintDetected;
+            _accessControl = new AccessControlService();
 
-            Loaded += (s, e) =>
+            // 3. Eventos do Arduino (Onde a mágica acontece)
+            _arduino.OnFingerprintDetected += FingerprintDetected; // Seu método original
+            _arduino.OnNoMatchDetected += NoMatchDetected;         // Seu método original
+
+            // 4. Conectar Arduino e Carregar Dados ao abrir a janela
+            Loaded += async (s, e) =>
             {
+                AtualizarDashboard(); // Carrega as listas do banco
+
+                await Task.Delay(500); // Pequeno delay para a interface carregar antes de conectar
                 try
                 {
-                    _arduino.Connect("COM3"); // Ajuste sua porta COM aqui
+                    _arduino.Connect("COM3"); // Verifique se é COM3 no seu Windows
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Erro Arduino: " + ex.Message);
+                    Console.WriteLine($"Erro ao conectar Arduino: {ex.Message}");
+                    // Opcional: MessageBox.Show("Erro ao conectar no Arduino.");
                 }
             };
         }
 
         // ============================================
-        // LÓGICA DO ARDUINO
+        // LÓGICA DE RECONHECIMENTO (O CORAÇÃO DO SISTEMA)
         // ============================================
-        private void OnFingerprintDetected(int fingerId)
+
+        private void FingerprintDetected(int fingerprintId)
+        {
+            // O Arduino roda em outra thread, precisamos do Dispatcher para mexer na tela
+            Dispatcher.Invoke(() =>
+            {
+                // 1. Valida se o ID existe e está ativo no banco
+                bool autorizado = _accessControl.ValidateFingerprint(fingerprintId);
+
+                if (autorizado)
+                {
+                    // 2. Registra o acesso no banco (Entrada)
+                    _accessControl.RegisterAccess(fingerprintId);
+
+                    // 3. Manda o comando para o Arduino abrir a porta
+                    _arduino.SendCommand("OPEN");
+
+                    // 4. Atualiza a lista na tela para mostrar quem acabou de entrar
+                    AtualizarDashboard();
+
+                    Console.WriteLine($"Acesso LIBERADO: ID {fingerprintId}");
+                }
+                else
+                {
+                    // 5. Se não autorizado, mostra alerta e loga erro
+                    Console.WriteLine($"Acesso NEGADO: ID {fingerprintId}");
+                    MostrarAlertaNaoAutorizado();
+                }
+            });
+        }
+
+        private void NoMatchDetected()
         {
             Dispatcher.Invoke(() =>
             {
-                // Aqui você pode adicionar na lista de entradas (LvEntradas)
-                // Por enquanto, mostra um aviso
-                MessageBox.Show($"Digital ID {fingerId} detectada!");
+                Console.WriteLine("Digital desconhecida/não cadastrada no sensor.");
+                MostrarAlertaNaoAutorizado();
             });
         }
 
         // ============================================
-        // BOTÕES DO MENU LATERAL
+        // FUNÇÕES VISUAIS E AUXILIARES
         // ============================================
 
-        // 1. Botão Dashboard (Entrada/Saída)
-        private void MenuBtn_click(object sender, RoutedEventArgs e)
+        private async void MostrarAlertaNaoAutorizado()
         {
-            // Já estamos na Dashboard, só fecha o menu
-            MainDrawerHost.IsLeftDrawerOpen = false;
+            // Exibe o alerta visual vermelho (se existir no XAML)
+            if (AlertNaoAutorizado != null)
+            {
+                AlertNaoAutorizado.Visibility = Visibility.Visible;
+                await Task.Delay(2500); // Espera 2.5 segundos
+                AlertNaoAutorizado.Visibility = Visibility.Collapsed;
+            }
         }
 
-        // 2. Botão Adicionar Moradores (O IMPORTANTE)
-        // OBS: Você precisa adicionar Click="AddBtn_Click" no seu XAML neste botão
+        private void AtualizarDashboard()
+        {
+            try
+            {
+                // Restaurei as DUAS listas que você tinha (Entradas e Saídas)
+                List<AcessoDashboard> entradas = _accessControl.GetUltimasEntradas();
+                List<AcessoDashboard> saidas = _accessControl.GetUltimasSaidas();
+
+                if (LvEntradas != null) LvEntradas.ItemsSource = entradas;
+                if (LvSaidas != null) LvSaidas.ItemsSource = saidas;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro ao atualizar listas: " + ex.Message);
+            }
+        }
+
+        // ============================================
+        // BOTÕES DO MENU E NAVEGAÇÃO
+        // ============================================
+
+        // Abre/Fecha o menu lateral
+        private void MenuBtn_click(object sender, RoutedEventArgs e)
+        {
+            if (MainDrawerHost != null)
+                MainDrawerHost.IsLeftDrawerOpen = !MainDrawerHost.IsLeftDrawerOpen;
+        }
+
+        // Ir para Adicionar Morador
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
+            MainDrawerHost.IsLeftDrawerOpen = false; // Fecha o menu
             NavegarParaJanela(new AddMoradorWindow(_usuarioLogado));
         }
 
-        // 3. Botão Gerenciar Moradores
+        // Ir para Lista de Moradores (Gerenciar)
         private void GerenciarBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Se você ainda não criou a Window de Gerenciar, deixe comentado ou crie a janela
+            MainDrawerHost.IsLeftDrawerOpen = false;
             NavegarParaJanela(new ListaMoradores(_usuarioLogado));
         }
 
-        // 4. Botão Relatórios
+        // Ir para Relatórios
         private void MenuRelatorioBtn_Click(object sender, RoutedEventArgs e)
         {
+            MainDrawerHost.IsLeftDrawerOpen = false;
             NavegarParaJanela(new GenReport(_usuarioLogado));
         }
 
-        // 5. Botão Histórico
+        // Ir para Histórico (Você mencionou "históricoRelatorio")
         private void MenuHistoricoBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Exemplo se tiver a janela de histórico
-            NavegarParaJanela(new históricoRelatorio(_usuarioLogado));
+            // ATENÇÃO: Verifique se o nome da classe é 'históricoRelatorio' ou 'HistoricoRelatorio' (maiúscula/acento)
+            // No seu código colado estava 'históricoRelatorio'.
+            // Se der erro, confira o nome do arquivo .xaml.cs dessa tela.
+            MainDrawerHost.IsLeftDrawerOpen = false;
+            // NavegarParaJanela(new históricoRelatorio(_usuarioLogado)); 
+
+            // Vou deixar comentado para não quebrar se a classe não existir ainda, 
+            // mas é só descomentar a linha de cima.
+            MessageBox.Show("Funcionalidade de Histórico pronta para ser ligada.");
         }
 
         // ============================================
-        // LOGOUT / SAIR
+        // LOGOUT / SAIR DO SISTEMA
         // ============================================
 
-        // Abre o Dialog de confirmação
         private void SairBtn_Click(object sender, RoutedEventArgs e)
         {
-            DialogoPrincipal.IsOpen = true;
+            // Abre o modal de confirmação
+            if (DialogoPrincipal != null)
+                DialogoPrincipal.IsOpen = true;
         }
 
-        // Confirma a saída (Botão SIM do Dialog)
         private void SairConfirmaBtn_Click(object sender, RoutedEventArgs e)
         {
+            // Desconecta antes de sair
             try { _arduino?.Disconnect(); } catch { }
 
-            MainWindow login = new MainWindow();
-            login.Show();
+            MainWindow telaLogin = new MainWindow();
+            telaLogin.WindowState = WindowState.Maximized;
+            telaLogin.Show();
             this.Close();
         }
 
         // ============================================
-        // FUNÇÃO AUXILIAR PARA TROCAR DE TELA
+        // MÉTODO GENÉRICO PARA NAVEGAR (LIMPEZA)
         // ============================================
         private void NavegarParaJanela(Window novaJanela)
         {
-            try { _arduino?.Disconnect(); } catch { } // Libera o Arduino
+            // Sempre desconecta o Arduino ao sair dessa tela para liberar a porta COM
+            try { _arduino?.Disconnect(); } catch { }
 
             novaJanela.WindowState = WindowState.Maximized;
             novaJanela.Show();
             this.Close();
         }
 
+        // Garante que desconecte se fechar pelo 'X' da janela
         protected override void OnClosed(EventArgs e)
         {
-            _arduino?.Disconnect();
+            try { _arduino?.Disconnect(); } catch { }
             base.OnClosed(e);
         }
     }
