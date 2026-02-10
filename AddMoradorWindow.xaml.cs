@@ -9,13 +9,19 @@ namespace wpf_exemplo
     {
         private SerialArduinoService _arduino;
 
+        // 1. Variável para guardar o usuário e não perder o login
+        private string _usuarioLogado;
+
         // controla qual dedo está sendo cadastrado
         private int _fingerIdEmCadastro = 0;
         private int _fingerSlotAtual = 1; // 1 ou 2
 
-        public AddMoradorWindow()
+        // 2. Construtor alterado para receber o username
+        public AddMoradorWindow(string username)
         {
             InitializeComponent();
+
+            _usuarioLogado = username; // Guarda o nome do usuário
 
             _arduino = new SerialArduinoService();
             _arduino.OnEnrollSuccess += OnEnrollSuccess;
@@ -156,7 +162,9 @@ namespace wpf_exemplo
             {
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Morador cadastrado com sucesso!");
-                Close();
+
+                // 3. Ao salvar com sucesso, volta para o Dashboard
+                BtnVoltar_Click(sender, e);
             }
             catch (MySqlException ex)
             {
@@ -169,8 +177,16 @@ namespace wpf_exemplo
         // =========================
         private void BtnVoltar_Click(object sender, RoutedEventArgs e)
         {
+            // Desconecta o Arduino desta tela
             _arduino?.Disconnect();
-            Close();
+
+            // 4. Reabre a Window1 passando o usuário logado
+            Window1 dashboard = new Window1(_usuarioLogado);
+            dashboard.WindowState = WindowState.Maximized;
+            dashboard.Show();
+
+            // Fecha a tela de cadastro
+            this.Close();
         }
 
         protected override void OnClosed(EventArgs e)

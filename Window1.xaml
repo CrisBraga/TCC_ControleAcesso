@@ -49,7 +49,8 @@
                             Style="{StaticResource MaterialDesignFlatButton}" 
                             Foreground="White" 
                             HorizontalAlignment="Left" 
-                            Margin="10,15,0,0">
+                            Margin="10,15,0,0"
+                            Click="AddBtn_Click">
 
                         <StackPanel Orientation="Horizontal">
 
@@ -323,13 +324,13 @@
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock Text="{Binding Nome}"
-                                       FontWeight="SemiBold"
-                                       FontSize="15"/>
+                                                       FontWeight="SemiBold"
+                                                       FontSize="15"/>  
 
                                             <TextBlock Text="{Binding DataHora}"
-                                       Grid.Column="1"
-                                       Foreground="LightGray"
-                                       FontSize="14"/>
+                                                       Grid.Column="1"
+                                                       Foreground="LightGray"
+                                                       FontSize="14"/>  
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -339,14 +340,14 @@
                     </Border>
                 </Grid>
                 <Border x:Name="AlertNaoAutorizado"
-        Background="#CCB71C1C"
-        CornerRadius="6"
-        Padding="12"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Top"
-        Margin="0,80,0,0"
-        Visibility="Collapsed"
-        Effect="{StaticResource MaterialDesignShadowDepth2}">
+                        Background="#CCB71C1C"
+                        CornerRadius="6"
+                        Padding="12"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Margin="0,80,0,0"
+                        Visibility="Collapsed"
+                        Effect="{StaticResource MaterialDesignShadowDepth2}">
 
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="AlertCircle"
@@ -356,9 +357,9 @@
                                  Margin="0,0,8,0"/>
 
                         <TextBlock Text="Digital não cadastrada"
-                   Foreground="White"
-                   FontSize="16"
-                   FontWeight="SemiBold"/>
+                                   Foreground="White"
+                                   FontSize="16"
+                                   FontWeight="SemiBold"/>
                     </StackPanel>
                 </Border>
 
