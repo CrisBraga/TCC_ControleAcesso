@@ -252,7 +252,6 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <!-- ================= ÚLTIMAS ENTRADAS ================= -->
                     <Border Grid.Row="0"
             Background="#AA000000"
             CornerRadius="25"
@@ -260,83 +259,85 @@
             Margin="308,0,0,20"
             Effect="{StaticResource MaterialDesignShadowDepth4}">
 
-                        <StackPanel>
-                            <TextBlock Text="Últimas Entradas"
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" 
+                       Text="Últimas Entradas"
                        FontSize="22"
                        FontWeight="Bold"
                        Foreground="White"
                        Margin="0,0,0,15"/>
 
                             <ListView x:Name="LvEntradas"
+                      Grid.Row="1"
                       Background="Transparent"
                       BorderThickness="0"
-                      Foreground="White">
+                      Foreground="White"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
 
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Margin="0,6">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <TextBlock Text="{Binding Nome}"
-                                       FontWeight="SemiBold"
-                                       FontSize="15"/>
-
-                                            <TextBlock Text="{Binding DataHora}"
-                                       Grid.Column="1"
-                                       Foreground="LightGray"
-                                       FontSize="14"/>
+                                            <TextBlock Text="{Binding Nome}" FontWeight="SemiBold" FontSize="15"/>
+                                            <TextBlock Text="{Binding DataHora}" Grid.Column="1" Foreground="LightGray" FontSize="14"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
-
                             </ListView>
-                        </StackPanel>
+                        </Grid>
                     </Border>
 
-                    <!-- ================= ÚLTIMAS SAÍDAS ================= -->
-                    <Border
+                    <Border Grid.Row="1"
             Background="#AA000000"
             CornerRadius="25"
             Padding="25"
-            Effect="{StaticResource MaterialDesignShadowDepth4}" Margin="308,282,0,0" Grid.RowSpan="2">
+            Margin="308,0,0,20" 
+            Effect="{StaticResource MaterialDesignShadowDepth4}">
 
-                        <StackPanel>
-                            <TextBlock Text="Últimas Saídas"
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                       Text="Últimas Saídas"
                        FontSize="22"
                        FontWeight="Bold"
                        Foreground="White"
                        Margin="0,0,0,15"/>
 
                             <ListView x:Name="LvSaidas"
+                      Grid.Row="1"
                       Background="Transparent"
                       BorderThickness="0"
-                      Foreground="White">
+                      Foreground="White"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
 
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Margin="0,6">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <TextBlock Text="{Binding Nome}"
-                                                       FontWeight="SemiBold"
-                                                       FontSize="15"/>  
-
-                                            <TextBlock Text="{Binding DataHora}"
-                                                       Grid.Column="1"
-                                                       Foreground="LightGray"
-                                                       FontSize="14"/>  
+                                            <TextBlock Text="{Binding Nome}" FontWeight="SemiBold" FontSize="15"/>
+                                            <TextBlock Text="{Binding DataHora}" Grid.Column="1" Foreground="LightGray" FontSize="14"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
-
                             </ListView>
-                        </StackPanel>
+                        </Grid>
                     </Border>
                 </Grid>
                 <Border x:Name="AlertNaoAutorizado"

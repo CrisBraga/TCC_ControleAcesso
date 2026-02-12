@@ -98,9 +98,13 @@
                               Margin="0,20,0,0"/>
 
                     <Button Content="Salvar alterações"
-                            Margin="400,30,400,0"
+                            Margin="0,40,0,0"
+                            FontSize="16"
                             Style="{StaticResource MaterialDesignRaisedButton}"
-                            Click="BtnSalvar_Click"/>
+                            materialDesign:ButtonAssist.CornerRadius="25"
+                            Click="BtnSalvar_Click"
+                            Height="50"
+                            FontWeight="Bold"/>
 
                 </StackPanel>
             </ScrollViewer>

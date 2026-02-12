@@ -34,12 +34,23 @@ namespace wpf_exemplo
                 }
                 catch (Exception ex)
                 {
+                    // CÓDIGO ANTIGO (MessageBox):
+                    /*
                     MessageBox.Show(
                         $"Erro ao conectar no Arduino:\n{ex.Message}",
                         "Erro",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error
                     );
+                    */
+
+                    // NOVO CÓDIGO (Toast / Snackbar):
+                    // Verifica se a fila de mensagens existe, se não, cria uma temporária
+                    if (MainSnackbar.MessageQueue == null)
+                        MainSnackbar.MessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue();
+
+                    // Enfileira a mensagem para aparecer na tela
+                    MainSnackbar.MessageQueue.Enqueue($"Arduino desconectado: {ex.Message}");
                 }
             };
         }

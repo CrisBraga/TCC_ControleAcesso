@@ -23,48 +23,59 @@
             <StackPanel Margin="40" VerticalAlignment="Center">
 
                 <materialDesign:PackIcon Kind="AccountCircle" 
-                                         Width="60"
-                                         Height="60"
-                                         HorizontalAlignment="Center"
-                                         Foreground="#FF1E3A5F"
-                                         Margin="0,0,0,20"/>
+                             Width="60"
+                             Height="60"
+                             HorizontalAlignment="Center"
+                             Foreground="#FF1E3A5F"
+                             Margin="0,0,0,20"/>
 
                 <TextBlock Text="Acesso ao Sistema" 
-                           FontSize="26" 
-                           FontWeight="Bold" 
-                           Foreground="#FF1E3A5F" 
-                           HorizontalAlignment="Center" 
-                           Margin="0,0,0,40"/>
+               FontSize="26" 
+               FontWeight="Bold" 
+               Foreground="#FF1E3A5F" 
+               HorizontalAlignment="Center" 
+               Margin="0,0,0,40"/>
 
                 <TextBox x:Name="txtUsuario"
-                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                         materialDesign:HintAssist.Hint="Usuário"
-                         FontSize="16"
-                         Height="50"
-                         Margin="0,0,0,20"
-                         Foreground="White"/>
+             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+             materialDesign:HintAssist.Hint="Usuário"
+             FontSize="16"
+             Height="50"
+             Margin="0,0,0,20"
+             Foreground="White"/>
 
                 <PasswordBox x:Name="txtSenha"
-                             Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
-                             materialDesign:HintAssist.Hint="Senha"
-                             FontSize="16"
-                             Height="50"
-                             Margin="0,0,0,40" 
-                             Foreground="White"/>
+                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                 materialDesign:HintAssist.Hint="Senha"
+                 FontSize="16"
+                 Height="50"
+                 Margin="0,0,0,5" 
+                 Foreground="White"/>
+
+                <Button Content="Esqueceu sua senha?"
+            Style="{StaticResource MaterialDesignFlatButton}"
+            HorizontalAlignment="Right"
+            Height="30"
+            FontSize="12"
+            Foreground="LightGray"
+            Padding="0"
+            Margin="0,0,0,20"
+            Click="BtnEsqueceuSenha_Click"/>
 
                 <Button Content="ENTRAR" Height="45"
-                        Style="{StaticResource MaterialDesignRaisedButton}"
-                        materialDesign:ButtonAssist.CornerRadius="18"
-                        Background="#FF1E3A5F" BorderBrush="#FF1E3A5F"
-                        IsDefault="True"
-                        Click="BtnEntrar_Click"/>
+            Style="{StaticResource MaterialDesignRaisedButton}"
+            materialDesign:ButtonAssist.CornerRadius="18"
+            Background="#FF1E3A5F" BorderBrush="#FF1E3A5F"
+            IsDefault="True"
+            Click="BtnEntrar_Click"/>
 
                 <Button Content="Criar uma conta" 
-                        Height="30"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        Margin="0,20,0,0"
-                        Foreground="Gray"
-                        Click="BtnCadastrar_Click"/>
+            Height="30"
+            Style="{StaticResource MaterialDesignFlatButton}"
+            Margin="0,20,0,0"
+            Foreground="Gray"
+            Click="BtnCadastrar_Click"/>
+
             </StackPanel>
 
         </Border>
@@ -81,7 +92,7 @@
         <materialDesign:Snackbar x:Name="msgLogin"
                                  MessageQueue="{materialDesign:MessageQueue}"
                                  HorizontalAlignment="Center"
-                                 VerticalAlignment="Bottom"
+                                 VerticalAlignment="Bottom" 
                                  Background="#FF1E3A5F"
                                  Foreground="White"
                                  FontSize="22"

@@ -59,5 +59,11 @@ namespace wpf_exemplo
             RegisterWindow registerWindow = new RegisterWindow();
             registerWindow.ShowDialog(); // ShowDialog trava a tela de trás até fechar o cadastro
         }
+
+        private void BtnEsqueceuSenha_Click(object sender, RoutedEventArgs e)
+        {
+            EsqueceuSenhaWindow janela = new EsqueceuSenhaWindow();
+            janela.ShowDialog(); // ShowDialog impede que o usuário mexa na tela de trás enquanto essa estiver aberta
+        }
     }
 }

@@ -132,5 +132,10 @@
             </ScrollViewer>
         </Border>
 
+        <materialDesign:Snackbar x:Name="MainSnackbar"
+                                 MessageQueue="{materialDesign:MessageQueue}"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Bottom"
+                                 Margin="20"/>
     </Grid>
 </Window>

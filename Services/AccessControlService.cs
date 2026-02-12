@@ -1,4 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
 using wpf_exemplo.Helpers;
 using wpf_exemplo.Models;
 
@@ -28,17 +30,16 @@ namespace wpf_exemplo.Services
         {
             string ultimoTipo = GetLastAccessType(fingerprintId);
 
-            string novoTipo = ultimoTipo == "ENTRADA"
-                ? "SAIDA"
-                : "ENTRADA";
+            // Se o último foi entrada, agora é saída. Se não tem registro ou foi saída, agora é entrada.
+            string novoTipo = (ultimoTipo == "ENTRADA") ? "SAIDA" : "ENTRADA";
 
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
             string sql = @"
-        INSERT INTO acessos (fingerprint_id, data_hora, tipo)
-        VALUES (@id, NOW(), @tipo)
-    ";
+                INSERT INTO acessos (fingerprint_id, data_hora, tipo)
+                VALUES (@id, NOW(), @tipo)
+            ";
 
             using var cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@id", fingerprintId);
@@ -47,7 +48,6 @@ namespace wpf_exemplo.Services
             cmd.ExecuteNonQuery();
         }
 
-
         public List<AcessoDashboard> GetUltimasEntradas()
         {
             var lista = new List<AcessoDashboard>();
@@ -55,17 +55,19 @@ namespace wpf_exemplo.Services
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
+            // ATUALIZADO: Adicionado m.bloco e m.apartamento
             string sql = @"
-        SELECT 
-            m.nome_completo,
-            a.data_hora
-        FROM acessos a
-        JOIN moradores m 
-          ON a.fingerprint_id = m.fingerprint_id_1
-          OR a.fingerprint_id = m.fingerprint_id_2
-        WHERE a.tipo = 'ENTRADA'
-        ORDER BY a.data_hora DESC
-        LIMIT 5;";
+                SELECT 
+                    m.nome_completo,
+                    m.bloco,
+                    m.apartamento,
+                    a.data_hora
+                FROM acessos a
+                JOIN moradores m 
+                  ON (a.fingerprint_id = m.fingerprint_id_1 OR a.fingerprint_id = m.fingerprint_id_2)
+                WHERE a.tipo = 'ENTRADA'
+                ORDER BY a.data_hora DESC
+                LIMIT 5;";
 
             using var cmd = new MySqlCommand(sql, conn);
             using var reader = cmd.ExecuteReader();
@@ -74,8 +76,10 @@ namespace wpf_exemplo.Services
             {
                 lista.Add(new AcessoDashboard
                 {
-                    Nome = reader.GetString("nome_completo"),
-                    DataHora = reader.GetDateTime("data_hora").ToString("dd/MM/yyyy HH:mm")
+                    Nome = reader["nome_completo"].ToString(),
+                    Bloco = reader["bloco"].ToString(),             // Preenche o Bloco
+                    Apartamento = reader["apartamento"].ToString(), // Preenche o Apto
+                    DataHora = Convert.ToDateTime(reader["data_hora"]).ToString("dd/MM/yyyy HH:mm")
                 });
             }
 
@@ -89,18 +93,19 @@ namespace wpf_exemplo.Services
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
+            // ATUALIZADO: Adicionado m.bloco e m.apartamento
             string sql = @"
-        SELECT 
-            m.nome_completo,
-            a.data_hora
-        FROM acessos a
-        JOIN moradores m 
-          ON a.fingerprint_id = m.fingerprint_id_1
-          OR a.fingerprint_id = m.fingerprint_id_2
-        WHERE a.tipo = 'SAIDA'
-        ORDER BY a.data_hora DESC
-        LIMIT 5;
-        ";
+                SELECT 
+                    m.nome_completo,
+                    m.bloco,
+                    m.apartamento,
+                    a.data_hora
+                FROM acessos a
+                JOIN moradores m 
+                  ON (a.fingerprint_id = m.fingerprint_id_1 OR a.fingerprint_id = m.fingerprint_id_2)
+                WHERE a.tipo = 'SAIDA'
+                ORDER BY a.data_hora DESC
+                LIMIT 5;";
 
             using var cmd = new MySqlCommand(sql, conn);
             using var reader = cmd.ExecuteReader();
@@ -109,25 +114,28 @@ namespace wpf_exemplo.Services
             {
                 lista.Add(new AcessoDashboard
                 {
-                    Nome = reader.GetString("nome_completo"),
-                    DataHora = reader.GetDateTime("data_hora").ToString("dd/MM/yyyy HH:mm")
+                    Nome = reader["nome_completo"].ToString(),
+                    Bloco = reader["bloco"].ToString(),             // Preenche o Bloco
+                    Apartamento = reader["apartamento"].ToString(), // Preenche o Apto
+                    DataHora = Convert.ToDateTime(reader["data_hora"]).ToString("dd/MM/yyyy HH:mm")
                 });
             }
 
             return lista;
         }
+
         public string GetLastAccessType(int fingerprintId)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
             string sql = @"
-        SELECT tipo 
-        FROM acessos
-        WHERE fingerprint_id = @id
-        ORDER BY data_hora DESC
-        LIMIT 1
-    ";
+                SELECT tipo 
+                FROM acessos
+                WHERE fingerprint_id = @id
+                ORDER BY data_hora DESC
+                LIMIT 1
+            ";
 
             using var cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@id", fingerprintId);
@@ -135,6 +143,5 @@ namespace wpf_exemplo.Services
             var result = cmd.ExecuteScalar();
             return result?.ToString();
         }
-
     }
 }
