@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Windows;
+using System.Windows.Media;
 using wpf_exemplo.Services;
 
 namespace wpf_exemplo
@@ -25,6 +26,8 @@ namespace wpf_exemplo
 
             _arduino = new SerialArduinoService();
             _arduino.OnEnrollSuccess += OnEnrollSuccess;
+            _arduino.OnEnrollStatus += AtualizarStatusBiometria;
+
 
             Loaded += (s, e) =>
             {
@@ -112,12 +115,8 @@ namespace wpf_exemplo
                 else
                     TxtFinger2.Text = fingerId.ToString();
 
-                MessageBox.Show(
-                    "Digital cadastrada com sucesso!",
-                    "Sucesso",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information
-                );
+                TxtStatusBiometria.Text = "Digital cadastrada com sucesso!";
+                TxtStatusBiometria.Foreground = Brushes.LightGreen;
             });
         }
 
@@ -170,6 +169,15 @@ namespace wpf_exemplo
             {
                 MessageBox.Show("Erro ao cadastrar morador:\n" + ex.Message);
             }
+        }
+
+        private void AtualizarStatusBiometria(string mensagem)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                TxtStatusBiometria.Text = mensagem;
+                TxtStatusBiometria.Foreground = Brushes.LightBlue;
+            });
         }
 
         // =========================
