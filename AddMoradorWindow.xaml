@@ -84,6 +84,12 @@
                                FontWeight="Bold"
                                Foreground="White"/>
 
+                    <TextBlock x:Name="TxtStatusBiometria"
+                               Text="Aguardando ação..."
+                               FontSize="14"
+                               Foreground="LightGray"
+                               Margin="0,10,0,0"/>
+
                     <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
                         <TextBox x:Name="TxtFinger1"
                                  Width="200"
