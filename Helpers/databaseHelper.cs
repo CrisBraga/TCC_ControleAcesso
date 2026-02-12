@@ -23,18 +23,17 @@ namespace wpf_exemplo.Helpers
                     string.IsNullOrWhiteSpace(password) ||
                     string.IsNullOrWhiteSpace(email))
                 {
-                    throw new ArgumentException("Todos os campos são obrigatórios.");
+                    // Apenas retorna false, a janela já validou isso antes de chamar aqui
+                    return false;
                 }
 
-                // 2. Hash da senha (mantendo sua lógica de segurança)
-                // Certifique-se de que a classe PasswordHelper existe no seu projeto
+                // 2. Hash da senha
                 string hashedPassword = PasswordHelper.HashPassword(password);
 
                 using (var conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
 
-                    // 3. SQL Atualizado para incluir nome_completo e email
                     string query = "INSERT INTO porteiros (nome_completo, username, email, password_hash) VALUES (@n, @u, @e, @p)";
 
                     using (var cmd = new MySqlCommand(query, conn))
@@ -51,27 +50,21 @@ namespace wpf_exemplo.Helpers
             }
             catch (MySqlException ex)
             {
-                // Códigos mais comuns:
-                // 1062 → Duplicate entry (usuário OU email já existem)
-                if (ex.Number == 1062)
-                {
-                    MessageBox.Show("Este usuário ou e-mail já estão cadastrados.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                else
-                {
-                    MessageBox.Show($"Erro no banco de dados:\n{ex.Message}", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-
+                // Erro de SQL (ex: Duplicado, Sem conexão)
+                // Isso imprime o erro no painel "Saída" do Visual Studio (para você ver), mas não abre janela pro usuário
+                System.Diagnostics.Debug.WriteLine($"Erro SQL: {ex.Message}");
                 return false;
             }
             catch (ArgumentException ex)
             {
-                MessageBox.Show($"Entrada inválida: {ex.Message}", "Erro", MessageBoxButton.OK, MessageBoxImage.Warning);
+                // Erro de Argumento
+                System.Diagnostics.Debug.WriteLine($"Erro Argumento: {ex.Message}");
                 return false;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro inesperado:\n{ex.Message}", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Erro Genérico
+                System.Diagnostics.Debug.WriteLine($"Erro Geral: {ex.Message}");
                 return false;
             }
         }
@@ -112,35 +105,39 @@ namespace wpf_exemplo.Helpers
         }
 
         public static bool UpdatePassword(string username, string email, string newPassword)
+        {
+            using (var conn = GetConnection())
+            {
+                try
                 {
-                    using (var conn = GetConnection())
+                    conn.Open();
+
+                    // 1. CORREÇÃO: Tabela 'porteiros', colunas 'password_hash', 'username' e 'email'
+                    // 2. Usamos o TRIM() para garantir que espaços em branco não atrapalhem
+                    string sql = "UPDATE porteiros SET password_hash = @senha WHERE username = @usuario AND email = @email";
+
+                    using (var cmd = new MySqlCommand(sql, conn))
                     {
-                        try
-                        {
-                            conn.Open();
-                            // Atualiza a senha APENAS se o usuário E o e-mail forem encontrados na mesma linha
-                            string sql = "UPDATE usuarios SET senha = @senha WHERE usuario = @usuario AND email = @email";
+                        // 3. CORREÇÃO: Gerar o HASH da nova senha (fundamental!)
+                        string hashedPassword = PasswordHelper.HashPassword(newPassword);
 
-                            using (var cmd = new MySqlCommand(sql, conn))
-                            {
-                                cmd.Parameters.AddWithValue("@usuario", username);
-                                cmd.Parameters.AddWithValue("@email", email);
-                                cmd.Parameters.AddWithValue("@senha", newPassword); // Idealmente, use hash aqui!
+                        cmd.Parameters.AddWithValue("@usuario", username.Trim());
+                        cmd.Parameters.AddWithValue("@email", email.Trim());
+                        cmd.Parameters.AddWithValue("@senha", hashedPassword);
 
-                                // ExecuteNonQuery retorna o número de linhas afetadas.
-                                // Se for maior que 0, significa que encontrou o usuário e atualizou.
-                                int rowsAffected = cmd.ExecuteNonQuery();
+                        int rowsAffected = cmd.ExecuteNonQuery();
 
-                                return rowsAffected > 0;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("Erro ao atualizar senha: " + ex.Message);
-                            return false;
-                        }
+                        // Se rowsAffected > 0, significa que o par usuário+email existia e foi atualizado
+                        return rowsAffected > 0;
                     }
                 }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Erro ao atualizar senha: " + ex.Message);
+                    return false;
+                }
+            }
+        }
 
         public static MySqlConnection GetConnection()
         {

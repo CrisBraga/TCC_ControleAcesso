@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Threading.Tasks; // Necessário para o Task.Delay
+using System.Windows;
 using wpf_exemplo.Helpers;
-using System.Windows.Media;
 
 namespace wpf_exemplo
 {
@@ -20,50 +21,48 @@ namespace wpf_exemplo
             // 1. Validação de campos vazios
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
-                msgErro.Background = new SolidColorBrush(Color.FromRgb(255, 30, 58));
-                msgErro.MessageQueue?.Enqueue("Preencha todos os campos!");
+                NotificationHelper.ShowError(msgErro, "Preencha todos os campos!");
                 return;
             }
-
 
             // 2. Validação no Banco de Dados
             if (DatabaseHelper.ValidateLogin(username, password))
             {
                 // LOGIN SUCESSO:
+                // Chamamos o helper para mostrar a mensagem verde
+                await NotificationHelper.ShowSuccess(msgLogin, "Login bem-sucedido");
 
-                msgLogin.MessageQueue?.Enqueue($"Login bem-sucedido");
-
+                // =================================================================
+                // CORREÇÃO AQUI: Adicionamos o delay manual para dar tempo de ver
+                // =================================================================
                 await Task.Delay(2000);
 
-                // Cria a janela principal (o Dashboard que fizemos com menu lateral)
-                Window1 dashboard = new Window1(username);
-
                 // Abre o Dashboard
+                Window1 dashboard = new Window1(username);
                 dashboard.Show();
 
-                // Fecha a tela de Login atual para não ficar aberta no fundo
+                // Fecha a tela de Login
                 this.Close();
             }
             else
             {
-                msgErro.Background = new SolidColorBrush(Color.FromRgb(255, 30, 58));
                 // LOGIN FALHOU:
-                msgErro.MessageQueue?.Enqueue("Usuário ou senha invalidos!");
+                NotificationHelper.ShowError(msgErro, "Usuário ou senha inválidos!");
             }
         }
 
         // Conectado ao botão "Criar uma conta" do XAML
         private void BtnCadastrar_Click(object sender, RoutedEventArgs e)
         {
-            // Abre a tela de registro
             RegisterWindow registerWindow = new RegisterWindow();
-            registerWindow.ShowDialog(); // ShowDialog trava a tela de trás até fechar o cadastro
+            registerWindow.ShowDialog();
         }
 
+        // Conectado ao botão "Esqueceu a senha"
         private void BtnEsqueceuSenha_Click(object sender, RoutedEventArgs e)
         {
             EsqueceuSenhaWindow janela = new EsqueceuSenhaWindow();
-            janela.ShowDialog(); // ShowDialog impede que o usuário mexa na tela de trás enquanto essa estiver aberta
+            janela.ShowDialog();
         }
     }
 }

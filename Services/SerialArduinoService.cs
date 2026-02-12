@@ -12,6 +12,7 @@ namespace wpf_exemplo.Services
         public event Action<int> OnFingerprintDetected;
         public event Action OnNoMatchDetected;
         public event Action<int> OnEnrollSuccess;
+        public event Action<string> OnEnrollStatus;
 
 
         public bool IsConnected => _serial != null && _serial.IsOpen;
@@ -80,12 +81,34 @@ namespace wpf_exemplo.Services
                 {
                     OnNoMatchDetected?.Invoke();
                 }
-
+                else if (line.StartsWith("ENROLL_OK:"))
+                {
+                    int id = int.Parse(line.Substring(10));
+                    OnEnrollSuccess?.Invoke(id);
+                }
+                else if (line == "ENROLL_FAIL")
+                {
+                    OnEnrollStatus?.Invoke("Falha ao cadastrar digital");
+                }
+                else if (line == "PLACE_FINGER")
+                {
+                    OnEnrollStatus?.Invoke("Coloque o dedo no sensor");
+                }
+                else if (line == "REMOVE_FINGER")
+                {
+                    OnEnrollStatus?.Invoke("Remova o dedo");
+                }
+                else if (line == "PLACE_FINGER_AGAIN")
+                {
+                    OnEnrollStatus?.Invoke("Coloque o dedo novamente");
+                }
             }
             catch
             {
-                // ignora erros de leitura
+                // ignora erros
             }
         }
     }
 }
+ 
+

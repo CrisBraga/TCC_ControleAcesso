@@ -6,13 +6,13 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         WindowStyle="None"
-        Background="#FF1E3A5F">
+        Background="#AA000000">
 
     <Grid>
         <StackPanel Margin="40">
 
             <TextBlock Text="Recuperação de Senha"
-                       Foreground="White"
+                       Foreground="#FF1E3A5F"
                        FontSize="22"
                        HorizontalAlignment="Center"
                        FontWeight="Bold"

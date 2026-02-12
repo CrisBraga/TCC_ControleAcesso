@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
-using wpf_exemplo.Helpers; // Importante para chamar o DatabaseHelper
+using wpf_exemplo.Helpers;
 
 namespace wpf_exemplo
 {
@@ -19,34 +19,36 @@ namespace wpf_exemplo
             string novaSenha = txtNovaSenha.Password;
             string confirmarSenha = txtConfirmarSenha.Password;
 
-            // 1. Validações básicas
+            // 1. Validações básicas (Campos Vazios)
             if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(email) ||
                 string.IsNullOrWhiteSpace(novaSenha))
             {
-                MySnackbar.MessageQueue?.Enqueue("Preencha todos os campos.");
+                NotificationHelper.ShowError(MySnackbar, "Preencha todos os campos.");
                 return;
             }
 
+            // 2. Validação de Senha Igual
             if (novaSenha != confirmarSenha)
             {
-                MySnackbar.MessageQueue?.Enqueue("As senhas não coincidem.");
+                NotificationHelper.ShowError(MySnackbar, "As senhas não coincidem.");
                 return;
             }
 
-            // 2. Tenta atualizar no banco
+            // 3. Tenta atualizar no banco
+            // Assumindo que você criou o método UpdatePassword no DatabaseHelper conforme conversamos antes
             bool sucesso = DatabaseHelper.UpdatePassword(usuario, email, novaSenha);
 
             if (sucesso)
             {
-                MySnackbar.MessageQueue?.Enqueue("Senha atualizada com sucesso!");
-                await Task.Delay(2000); // Espera um pouco para o usuário ler
-                this.Close(); // Fecha a janela
+                // SUCESSO:
+                // Passamos 'this' para que ele feche a janela automaticamente após 2 segundos
+                await NotificationHelper.ShowSuccess(MySnackbar, "Senha atualizada com sucesso!", this);
             }
             else
             {
-                // Se falhou, é porque o Usuário + Email não bateram com nenhum registro
-                MessageBox.Show("Usuário ou E-mail incorretos.\nNão foi possível alterar a senha.",
-                                "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                // ERRO:
+                // Substituímos o MessageBox antigo por um aviso bonito no Snackbar vermelho
+                NotificationHelper.ShowError(MySnackbar, "Usuário ou E-mail incorretos.");
             }
         }
 

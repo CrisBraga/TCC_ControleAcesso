@@ -15,6 +15,11 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Secondary/MaterialDesignColor.Blue.xaml" />
 
             </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="ErrorBrush" Color="#FFD32F2F"/>
+
+            <SolidColorBrush x:Key="SuccessBrush" Color="#FF1E3A5F"/>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
