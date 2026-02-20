@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using wpf_exemplo.Services;
+using wpf_exemplo.Models;
+using MaterialDesignThemes.Wpf;
+using wpf_exemplo.Helpers;
 
 namespace wpf_exemplo.Helpers
 {
-    internal class navegarParaJanela
+    public static class navigationHelper
     {
-        private void NavegarParaJanela(Window novaJanela)
+        public static void NavegarParaJanela(Window janelaAtual,Window novaJanela)
         {
-            // Sempre desconecta o Arduino ao sair dessa tela para liberar a porta COM
-            try { _arduino?.Disconnect(); } catch { }
-
             novaJanela.WindowState = WindowState.Maximized;
             novaJanela.Show();
-            this.Close();
+            janelaAtual.Close();
         }
     }
 }

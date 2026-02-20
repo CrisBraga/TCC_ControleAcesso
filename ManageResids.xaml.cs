@@ -3,12 +3,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using MySql.Data.MySqlClient;
+using wpf_exemplo.Helpers;
+
 
 namespace wpf_exemplo
 {
     public partial class ManageResids : Window
     {
         private int _moradorId;
+
+        // 1. CRIAMOS UMA VARIÁVEL PARA NÃO PERDER O LOGIN
+        private string _usuarioLogado;
 
         public ManageResids(int moradorId)
         {
@@ -17,10 +22,22 @@ namespace wpf_exemplo
             CarregarDadosMorador();
         }
 
-        // Botão Voltar
+        public ManageResids(string usuarioLogado)
+        {
+            InitializeComponent();
+
+            // 2. GUARDAMOS O NOME DO USUÁRIO AQUI
+            _usuarioLogado = usuarioLogado;
+        }
+
+        // 3. BOTÃO VOLTAR CORRIGIDO
         private void BtnVoltar_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            // Criamos a tela principal de novo passando o usuário
+            Window1 dashboard = new Window1(_usuarioLogado);
+
+            // Usamos o Helper para abrir o dashboard e fechar a tela atual
+            navigationHelper.NavegarParaJanela(this, dashboard);
         }
 
 

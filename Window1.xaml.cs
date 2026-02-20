@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using wpf_exemplo.Services;
 using wpf_exemplo.Models;
-using MaterialDesignThemes.Wpf; // Necessário para o DialogHost e DrawerHost
+using MaterialDesignThemes.Wpf;
+using wpf_exemplo.Helpers; // Necessário para o DialogHost e DrawerHost
 
 namespace wpf_exemplo
 {
@@ -22,9 +23,15 @@ namespace wpf_exemplo
         {
             InitializeComponent();
 
-            // 1. Tratamento do Nome do Usuário
+            // 1. PROTEÇÃO: Se o nome chegar vazio/nulo por algum motivo, colocamos um padrão.
+            if (string.IsNullOrEmpty(username))
+            {
+                username = "Porteiro";
+            }
+
+            // 2. Tratamento do Nome do Usuário
             _usuarioLogado = username;
-            nomeUser = username.Replace("Olá, ", ""); // Garante que não duplique o "Olá"
+            nomeUser = username.Replace("Olá, ", ""); // Agora isso nunca mais vai dar erro
 
             if (txtUsuarioNome != null)
                 txtUsuarioNome.Text = $"Olá, {nomeUser}";
@@ -45,7 +52,7 @@ namespace wpf_exemplo
                 await Task.Delay(500); // Pequeno delay para a interface carregar antes de conectar
                 try
                 {
-                    _arduino.Connect("COM3"); // Verifique se é COM3 no seu Windows
+                    _arduino.Connect("COM14"); // Verifique se é COM3 no seu Windows
                 }
                 catch (Exception ex)
                 {
@@ -145,21 +152,28 @@ namespace wpf_exemplo
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
             MainDrawerHost.IsLeftDrawerOpen = false; // Fecha o menu
-            NavegarParaJanela(new AddMoradorWindow(_usuarioLogado));
+            AddMoradorWindow adicionarMorador = (new AddMoradorWindow(_usuarioLogado));
+
+            navigationHelper.NavegarParaJanela(this, adicionarMorador);
+
         }
 
         // Ir para Lista de Moradores (Gerenciar)
         private void GerenciarBtn_Click(object sender, RoutedEventArgs e)
         {
             MainDrawerHost.IsLeftDrawerOpen = false;
-            NavegarParaJanela(new ListaMoradores(_usuarioLogado));
+             ListaMoradores listar = new ListaMoradores(_usuarioLogado);
+
+            navigationHelper.NavegarParaJanela(this, listar);
         }
 
         // Ir para Relatórios
         private void MenuRelatorioBtn_Click(object sender, RoutedEventArgs e)
         {
             MainDrawerHost.IsLeftDrawerOpen = false;
-            NavegarParaJanela(new GenReport(_usuarioLogado));
+            GenReport gerarRelatorio = new GenReport(_usuarioLogado);
+
+            navigationHelper.NavegarParaJanela(this, gerarRelatorio);
         }
 
         // Ir para Histórico (Você mencionou "históricoRelatorio")
@@ -167,7 +181,9 @@ namespace wpf_exemplo
         {
             MainDrawerHost.IsLeftDrawerOpen = false;
 
-            NavegarParaJanela(new históricoRelatorio(_usuarioLogado));
+            históricoRelatorio hist = new históricoRelatorio(_usuarioLogado);
+
+            navigationHelper.NavegarParaJanela(this, hist);
 
         }
 
@@ -187,7 +203,9 @@ namespace wpf_exemplo
             // Desconecta antes de sair
             try { _arduino?.Disconnect(); } catch { }
 
-            NavegarParaJanela(new MainWindow(_usuarioLogado));
+            MainWindow login = new MainWindow();
+
+            navigationHelper.NavegarParaJanela(this, login);
         }
 
         // ============================================
@@ -195,6 +213,7 @@ namespace wpf_exemplo
         // ============================================
 
         // Garante que desconecte se fechar pelo 'X' da janela
+
         protected override void OnClosed(EventArgs e)
         {
             try { _arduino?.Disconnect(); } catch { }

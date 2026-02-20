@@ -30,12 +30,9 @@ namespace wpf_exemplo
         {
             // Agora instanciamos a Window1 (Dashboard) e não a Login
             // E passamos o usuário de volta para ela
-            Window1 dashboard = new Window1(_usuarioLogado);
+            Window1 principal = new Window1(_usuarioLogado);
 
-            dashboard.WindowState = WindowState.Maximized;
-            dashboard.Show();
-
-            this.Close();
+            navigationHelper.NavegarParaJanela(this, principal);
         }
 
         // ... O RESTANTE DO CÓDIGO DO PDF PERMANECE IGUAL ...

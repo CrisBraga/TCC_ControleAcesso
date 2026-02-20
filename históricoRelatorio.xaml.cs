@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
+using wpf_exemplo.Helpers;
 
 namespace wpf_exemplo
 {
@@ -22,12 +23,9 @@ namespace wpf_exemplo
         private void BtnVoltar_Click(object sender, RoutedEventArgs e)
         {
             // Volta para a tela principal (Window1), devolvendo o nome do porteiro
-            Window1 telaPrincipal = new Window1(_nomeUser);
+            Window1 principal = new Window1(_nomeUser);
 
-            telaPrincipal.WindowState = WindowState.Maximized;
-            telaPrincipal.Show();
-
-            this.Close(); // Fecha a tela de histórico
+            navigationHelper.NavegarParaJanela(this, principal);
         }
 
         // --- EVENTOS DA LISTA E PESQUISA ---

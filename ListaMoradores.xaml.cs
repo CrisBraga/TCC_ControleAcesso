@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using wpf_exemplo.Helpers;
 using wpf_exemplo.Models;
 
 namespace wpf_exemplo
@@ -25,10 +26,11 @@ namespace wpf_exemplo
 
         private void BtnVoltar_Click(object sender, RoutedEventArgs e)
         {
-            Window1 window1 = new Window1(nomePorteiro);
-            window1.WindowState = WindowState.Maximized;
-            window1.Show();
-            this.Close();
+            // Volta para a tela principal (Dashboard) devolvendo o nome do porteiro
+            Window1 dashboard = new Window1(nomePorteiro);
+
+            // Usa o helper para fechar a lista e abrir o dashboard
+            navigationHelper.NavegarParaJanela(this, dashboard);
         }
 
         private void CarregarMoradores()

@@ -38,11 +38,9 @@ namespace wpf_exemplo
                 await Task.Delay(2000);
 
                 // Abre o Dashboard
-                Window1 dashboard = new Window1(username);
-                dashboard.Show();
+                Window1 principal = new Window1(username);
 
-                // Fecha a tela de Login
-                this.Close();
+                navigationHelper.NavegarParaJanela(this, principal);
             }
             else
             {
