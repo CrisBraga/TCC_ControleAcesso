@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Media;
+using wpf_exemplo.Helpers;
 using wpf_exemplo.Services;
 
 namespace wpf_exemplo
@@ -35,25 +36,10 @@ namespace wpf_exemplo
                 {
                     _arduino.Connect("COM3"); // ajuste se necessário
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    // CÓDIGO ANTIGO (MessageBox):
-                    /*
-                    MessageBox.Show(
-                        $"Erro ao conectar no Arduino:\n{ex.Message}",
-                        "Erro",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
-                    */
-
-                    // NOVO CÓDIGO (Toast / Snackbar):
-                    // Verifica se a fila de mensagens existe, se não, cria uma temporária
-                    if (MainSnackbar.MessageQueue == null)
-                        MainSnackbar.MessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue();
-
-                    // Enfileira a mensagem para aparecer na tela
-                    MainSnackbar.MessageQueue.Enqueue($"Arduino desconectado: {ex.Message}");
+                    // CHAMA SÓ A SUA FUNÇÃO PRONTA AQUI!
+                    NotificationHelper.ShowError(MainSnackbar, "⚠️ Não foi possível conectar ao leitor biométrico.");
                 }
             };
         }
@@ -134,12 +120,17 @@ namespace wpf_exemplo
         // =========================
         // SALVAR MORADOR
         // =========================
-        private void BtnSalvar_Click(object sender, RoutedEventArgs e)
+        // 1. Adicionamos o 'async' aqui na declaração do método
+        private async void BtnSalvar_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TxtNome.Text))
+            // Valida se NOME, BLOCO, APARTAMENTO ou TELEFONE estão vazios
+            if (string.IsNullOrWhiteSpace(TxtNome.Text) ||
+                string.IsNullOrWhiteSpace(TxtBloco.Text) ||
+                string.IsNullOrWhiteSpace(TxtApartamento.Text) ||
+                string.IsNullOrWhiteSpace(TxtTelefone.Text))
             {
-                MessageBox.Show("Informe o nome do morador.");
-                return;
+                NotificationHelper.ShowError(MainSnackbar, "Preencha todos os campos: Nome, Bloco, Apto e Telefone.");
+                return; // Para a execução aqui e não salva no banco
             }
 
             string connStr = "server=localhost;database=SISTEMA;uid=root;pwd=;";
@@ -171,14 +162,21 @@ namespace wpf_exemplo
             try
             {
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("Morador cadastrado com sucesso!");
 
-                // 3. Ao salvar com sucesso, volta para o Dashboard
+                // 2. Trocamos o MessageBox pelo Snackbar de SUCESSO
+                // Não passamos 'this' aqui, porque queremos abrir a Window1 antes de fechar
+                await NotificationHelper.ShowSuccess(MainSnackbar, "Morador cadastrado com sucesso!");
+
+                // 3. Aguarda 1.5 segundos para o usuário ler a mensagem na tela
+                await Task.Delay(1500);
+
+                // 4. Volta para o Dashboard
                 BtnVoltar_Click(sender, e);
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Erro ao cadastrar morador:\n" + ex.Message);
+                // Trocamos o MessageBox pelo Snackbar de ERRO
+                NotificationHelper.ShowError(MainSnackbar, $"Erro ao cadastrar morador: {ex.Message}");
             }
         }
 

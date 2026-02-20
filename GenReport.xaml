@@ -124,6 +124,12 @@
 
             </StackPanel>
         </Border>
-
+        <materialDesign:Snackbar 
+            x:Name="MainSnackbar" 
+            MessageQueue="{materialDesign:MessageQueue}"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Bottom"
+            Margin="0,0,0,30" 
+            Panel.ZIndex="100"/>
     </Grid>
 </Window>

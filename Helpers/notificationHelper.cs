@@ -17,6 +17,12 @@ namespace wpf_exemplo.Helpers
             var errorBrush = Application.Current.FindResource("ErrorBrush") as SolidColorBrush;
 
             snackbar.Background = errorBrush;
+
+            // -----------------------------------------------------
+            // CORREÇÃO: Define a cor do texto como branco
+            // -----------------------------------------------------
+            snackbar.Foreground = Brushes.White;
+
             snackbar.MessageQueue?.Enqueue(message);
         }
 
@@ -29,6 +35,12 @@ namespace wpf_exemplo.Helpers
             var successBrush = Application.Current.FindResource("SuccessBrush") as SolidColorBrush;
 
             snackbar.Background = successBrush;
+
+            // -----------------------------------------------------
+            // CORREÇÃO: Define a cor do texto como branco
+            // -----------------------------------------------------
+            snackbar.Foreground = Brushes.White;
+
             snackbar.MessageQueue?.Enqueue(message);
 
             // Se você passou uma janela para fechar, ele espera e fecha

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using Microsoft.Win32;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using wpf_exemplo.Helpers;
 
 namespace wpf_exemplo
 {
@@ -38,33 +40,43 @@ namespace wpf_exemplo
 
         // ... O RESTANTE DO CÓDIGO DO PDF PERMANECE IGUAL ...
         // (BtnGerarRelatorio_Click e GerarArquivoPDF)
-        private void BtnGerarRelatorio_Click(object sender, RoutedEventArgs e)
+        private async void BtnGerarRelatorio_Click(object sender, RoutedEventArgs e)
         {
-            // ... (mesmo código que você já tem) ...
-            // Vou omitir aqui para economizar espaço, mantenha o seu código de PDF.
             if (DtInicio.SelectedDate == null || DtFim.SelectedDate == null)
             {
-                MessageBox.Show("Selecione a Data de Início e Fim.", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                NotificationHelper.ShowError(MainSnackbar, "Selecione a Data de Início e Fim.");
                 return;
             }
 
-            SaveFileDialog dialog = new SaveFileDialog
+            if (string.IsNullOrWhiteSpace(CmbTipoRelatorio.Text))
             {
-                Filter = "Arquivo PDF (*.pdf)|*.pdf",
-                FileName = $"Relatorio_{DateTime.Now:yyyyMMdd_HHmm}.pdf"
-            };
+                NotificationHelper.ShowError(MainSnackbar, "Selecione o Tipo de Relatório.");
+                return;
+            }
 
-            if (dialog.ShowDialog() == true)
+            try
             {
-                try
+                // 1. Cria a pasta oficial do sistema para guardar o histórico
+                string pastaHistorico = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RelatoriosGerados");
+                if (!Directory.Exists(pastaHistorico))
                 {
-                    GerarArquivoPDF(dialog.FileName);
-                    MessageBox.Show("PDF gerado com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Directory.CreateDirectory(pastaHistorico);
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Erro ao salvar: {ex.Message}", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+
+                // 2. Monta o nome do arquivo dinamicamente
+                string tipoLimpo = CmbTipoRelatorio.Text.Replace(" ", "").Replace("/", "_");
+                string nomeArquivo = $"Rel_{tipoLimpo}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+                string caminhoCompleto = Path.Combine(pastaHistorico, nomeArquivo);
+
+                // 3. Gera o PDF usando o seu método
+                GerarArquivoPDF(caminhoCompleto);
+
+                // 4. Mostra o sucesso com o Toast Flutuante
+                await NotificationHelper.ShowSuccess(MainSnackbar, "Relatório gerado e salvo no histórico!");
+            }
+            catch (Exception ex)
+            {
+                NotificationHelper.ShowError(MainSnackbar, $"Erro ao gerar: {ex.Message}");
             }
         }
 

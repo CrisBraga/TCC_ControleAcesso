@@ -106,18 +106,25 @@
                                                              Width="30" Height="30" Foreground="#FF1E3A5F" VerticalAlignment="Center"/>
 
                                     <StackPanel Grid.Column="1" Margin="15,0,0,0" VerticalAlignment="Center">
-                                        <TextBlock Text="Relatório Exemplo.pdf" FontSize="16" FontWeight="SemiBold" Foreground="White"/>
-                                        <TextBlock Text="Tipo: Vendas" FontSize="12" Foreground="LightGray"/>
+                                        <TextBlock Text="{Binding NomeArquivo}" FontSize="16" FontWeight="SemiBold" Foreground="White"/>
+                                        <TextBlock Text="{Binding TipoRelatorio}" FontSize="12" Foreground="LightGray"/>
                                     </StackPanel>
 
-                                    <TextBlock Grid.Column="2" Text="05/10/2023" VerticalAlignment="Center" Foreground="Gray"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding DataCriacao}" VerticalAlignment="Center" Foreground="Gray"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
             </Grid>
         </Border>
+
+        <materialDesign:Snackbar 
+            x:Name="MainSnackbar" 
+            MessageQueue="{materialDesign:MessageQueue}"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Bottom"
+            Margin="0,0,0,30" 
+            Panel.ZIndex="100"/>
     </Grid>
 </Window>

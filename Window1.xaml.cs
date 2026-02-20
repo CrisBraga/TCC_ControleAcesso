@@ -165,15 +165,10 @@ namespace wpf_exemplo
         // Ir para Histórico (Você mencionou "históricoRelatorio")
         private void MenuHistoricoBtn_Click(object sender, RoutedEventArgs e)
         {
-            // ATENÇÃO: Verifique se o nome da classe é 'históricoRelatorio' ou 'HistoricoRelatorio' (maiúscula/acento)
-            // No seu código colado estava 'históricoRelatorio'.
-            // Se der erro, confira o nome do arquivo .xaml.cs dessa tela.
             MainDrawerHost.IsLeftDrawerOpen = false;
-            // NavegarParaJanela(new históricoRelatorio(_usuarioLogado)); 
 
-            // Vou deixar comentado para não quebrar se a classe não existir ainda, 
-            // mas é só descomentar a linha de cima.
-            MessageBox.Show("Funcionalidade de Histórico pronta para ser ligada.");
+            NavegarParaJanela(new históricoRelatorio(_usuarioLogado));
+
         }
 
         // ============================================
@@ -192,24 +187,12 @@ namespace wpf_exemplo
             // Desconecta antes de sair
             try { _arduino?.Disconnect(); } catch { }
 
-            MainWindow telaLogin = new MainWindow();
-            telaLogin.WindowState = WindowState.Maximized;
-            telaLogin.Show();
-            this.Close();
+            NavegarParaJanela(new MainWindow(_usuarioLogado));
         }
 
         // ============================================
         // MÉTODO GENÉRICO PARA NAVEGAR (LIMPEZA)
         // ============================================
-        private void NavegarParaJanela(Window novaJanela)
-        {
-            // Sempre desconecta o Arduino ao sair dessa tela para liberar a porta COM
-            try { _arduino?.Disconnect(); } catch { }
-
-            novaJanela.WindowState = WindowState.Maximized;
-            novaJanela.Show();
-            this.Close();
-        }
 
         // Garante que desconecte se fechar pelo 'X' da janela
         protected override void OnClosed(EventArgs e)
