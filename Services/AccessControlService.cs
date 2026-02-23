@@ -77,9 +77,9 @@ namespace wpf_exemplo.Services
                 lista.Add(new AcessoDashboard
                 {
                     Nome = reader["nome_completo"].ToString(),
-                    Bloco = reader["bloco"].ToString(),             // Preenche o Bloco
-                    Apartamento = reader["apartamento"].ToString(), // Preenche o Apto
-                    DataHora = Convert.ToDateTime(reader["data_hora"]).ToString("dd/MM/yyyy HH:mm")
+                    DataHora = Convert.ToDateTime(reader["data_hora"]).ToString("dd/MM/yyyy HH:mm"),
+                    Bloco = reader["bloco"].ToString(),             // Tem que preencher o Bloco
+                    Apartamento = reader["apartamento"].ToString()  // Tem que preencher o Apartamento
                 });
             }
 

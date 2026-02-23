@@ -52,7 +52,7 @@ namespace wpf_exemplo
                 await Task.Delay(500); // Pequeno delay para a interface carregar antes de conectar
                 try
                 {
-                    _arduino.Connect("COM14"); // Verifique se é COM3 no seu Windows
+                    _arduino.Connect("COM4"); // Verifique se é COM3 no seu Windows
                 }
                 catch (Exception ex)
                 {

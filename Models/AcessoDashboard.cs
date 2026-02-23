@@ -12,6 +12,8 @@ namespace wpf_exemplo.Models
         public string Bloco { get; set; }
         public string Apartamento { get; set; }
         public string DataHora { get; set; }
+
+        public string BlocoApt => $"{Bloco} - Apt {Apartamento}";
     }
 }
 

@@ -1,4 +1,3 @@
-DROP DATABASE IF EXISTS SISTEMA; -- Remove o banco antigo para recriar com a nova estrutura
 CREATE DATABASE SISTEMA;
 USE SISTEMA;
 
@@ -26,6 +25,15 @@ CREATE TABLE IF NOT EXISTS moradores (
     
     ativo BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS HistoricoRelatorios (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    NomeArquivo VARCHAR(255),
+    TipoRelatorio VARCHAR(100),
+    DataCriacao DATETIME,
+    CaminhoCompleto VARCHAR(500),
+    UsuarioSolicitante VARCHAR(100)
 );
 
 -- Tabela de Acessos

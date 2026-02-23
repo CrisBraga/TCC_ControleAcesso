@@ -41,7 +41,7 @@ namespace wpf_exemplo
                     await Task.Delay(500);
 
                     // 3. Conecta ao Arduino
-                    _arduino.Connect("COM14");
+                    _arduino.Connect("COM4");
                     AtualizarStatusBiometria("Sensor conectado. Escolha um dedo para cadastrar.");
                 }
                 catch (Exception ex)
