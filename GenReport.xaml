@@ -96,17 +96,7 @@
                     <ComboBoxItem Content="Reservas de Áreas Comuns"/>
                 </ComboBox>
 
-                <ComboBox x:Name="CmbFiltroBloco"
-                          materialDesign:HintAssist.Hint="Filtrar por Bloco (Opcional)"
-                          materialDesign:HintAssist.Foreground="White"
-                          Foreground="White"
-                          Margin="0,25,0,0"
-                          Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                    <ComboBoxItem Content="Todos os Blocos"/>
-                    <ComboBoxItem Content="Bloco A"/>
-                    <ComboBoxItem Content="Bloco B"/>
-                    <ComboBoxItem Content="Bloco C"/>
-                </ComboBox>
+                
 
                 <CheckBox Content="Exportar direto para PDF"
                           IsChecked="True"
